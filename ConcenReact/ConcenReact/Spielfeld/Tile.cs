@@ -133,7 +133,7 @@ namespace ConcenReact
         {
             if(interaction.GetType()==typeof(GetItemInteraction) && !interaction.Interacted)
             {
-                currPlayerOnTile.AddWeapon(debugForm,(Weapon)((GetItemInteraction)interaction).Interact());
+                currPlayerOnTile.AddEquipWeapon(debugForm,(Weapon)((GetItemInteraction)interaction).Interact());
                 interaction.Interacted = true;
             }
         }

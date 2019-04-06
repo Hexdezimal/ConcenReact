@@ -164,6 +164,11 @@ namespace ConcenReact
                 //Charaktere zeichnen
                 gesamtGraphics.DrawImage(player1.CharacterBitmap, player1.XPos * tileSize, player1.YPos * tileSize, player1.CharacterBitmap.Width, player1.CharacterBitmap.Height);
                 gesamtGraphics.DrawImage(player2.CharacterBitmap, player2.XPos * tileSize, player2.YPos * tileSize, player2.CharacterBitmap.Width, player2.CharacterBitmap.Height);
+
+                //HP-Balken
+                gesamtGraphics.FillRectangle(menuBrush, player1.XPos * tileSize,2+ tileSize + player1.YPos * tileSize, player1.CharacterBitmap.Width, 8);
+                gesamtGraphics.FillRectangle(Brushes.Green,2+ player1.XPos * tileSize, 4+tileSize + player1.YPos * tileSize, player1.HpMax+player1.Hp, 4);
+
                 //Marker zeichnen
                 gesamtGraphics.DrawRectangle(Pens.White, new Rectangle(lastClickedPos.X * tileSize, lastClickedPos.Y * tileSize, tileSize, tileSize));
 
@@ -173,6 +178,19 @@ namespace ConcenReact
 
                 //Aktuelle Tile
                 Tile tempTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
+
+                //Indikator für Interaktion, überprüfen ob Interagierbar + Interaktion nicht leer
+                if(tempTile.IsInteractable && tempTile.GetInteraction()!=null)
+                {
+                    Brush tempBrush;
+                    //Farbe je nach Interaktionsstatus
+                    if (!tempTile.GetInteraction().Interacted)
+                        tempBrush = Brushes.MediumVioletRed;
+                    else
+                        tempBrush = Brushes.Gray;
+ 
+                    gesamtGraphics.FillEllipse(tempBrush, currPlayer.XPos * tileSize, currPlayer.YPos * tileSize, tileSize / 4, tileSize / 4);
+                }
 
                 //Debug-Menü mit Tile-Informationen
                 gesamtGraphics.FillRectangle(menuBrush, new Rectangle(0,pbSizeY-tileSize*4,tileSize*8,tileSize*4));

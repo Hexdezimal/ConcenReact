@@ -153,7 +153,18 @@ namespace ConcenReact
           
             return gesamt;
         }
-
+        private void DrawPlayer(Player player)
+        {
+            //Spieler zeichnen
+            gesamtGraphics.DrawImage(player.CharacterBitmap, player.XPos * tileSize, player.YPos * tileSize, player.CharacterBitmap.Width, player.CharacterBitmap.Height);
+            DrawHpBar(player);
+        }
+        private void DrawHpBar(Player player)
+        {
+            //HP-Balken     TODO: MAGIC-VALUES ersetzen
+            gesamtGraphics.FillRectangle(menuBrush, player.XPos * tileSize, 2 + tileSize + player.YPos * tileSize, player.CharacterBitmap.Width, 8);
+            gesamtGraphics.FillRectangle(Brushes.Green, 2 + player.XPos * tileSize, 4 + tileSize + player.YPos * tileSize, (tileSize / player.HpMax * player.Hp) - 2, 4);
+        }
         public void DrawGame()
         {
             gesamtGraphics = Graphics.FromImage(gesamt);
@@ -161,13 +172,14 @@ namespace ConcenReact
             {
                 //Hintergrund zeichnen
                 gesamtGraphics.DrawImage(background, 0, 0, pbSizeX, pbSizeY);
-                //Charaktere zeichnen
-                gesamtGraphics.DrawImage(player1.CharacterBitmap, player1.XPos * tileSize, player1.YPos * tileSize, player1.CharacterBitmap.Width, player1.CharacterBitmap.Height);
-                gesamtGraphics.DrawImage(player2.CharacterBitmap, player2.XPos * tileSize, player2.YPos * tileSize, player2.CharacterBitmap.Width, player2.CharacterBitmap.Height);
 
-                //HP-Balken
-                gesamtGraphics.FillRectangle(menuBrush, player1.XPos * tileSize,2+ tileSize + player1.YPos * tileSize, player1.CharacterBitmap.Width, 8);
-                gesamtGraphics.FillRectangle(Brushes.Green,2+ player1.XPos * tileSize, 4+tileSize + player1.YPos * tileSize, player1.HpMax+player1.Hp, 4);
+
+                //Charaktere zeichnen
+                DrawPlayer(player1);
+                DrawPlayer(player2);
+
+
+
 
                 //Marker zeichnen
                 gesamtGraphics.DrawRectangle(Pens.White, new Rectangle(lastClickedPos.X * tileSize, lastClickedPos.Y * tileSize, tileSize, tileSize));

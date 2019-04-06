@@ -12,6 +12,7 @@ namespace ConcenReact
 
         private List<int> scores;   //Liste für alle Scores
         private int xPos, yPos;
+        private int hp, hpMax;
         private int indexHighscore; //Index des Highscores
         private Guid saveGUID;
         private bool isEnemy;
@@ -39,8 +40,12 @@ namespace ConcenReact
             
             XPos = 0;
             YPos = 0;
+
+            //Stats
             MovePower = 5;
             InventorySpace = 4;
+            hpMax = 10;
+            hp = hpMax;
 
             if (isEnemy)
             {
@@ -70,7 +75,7 @@ namespace ConcenReact
             }
             CharacterBitmap.MakeTransparent(Color.Black);
         }
-        public void AddWeapon(DebugForm debug,Weapon w)
+        public void AddEquipWeapon(DebugForm debug,Weapon w)
         {
             if (weapon == null)
             {
@@ -82,15 +87,21 @@ namespace ConcenReact
             {
                 if (debug != null)
                     debug.WriteLine("Waffe ins Inventar gepackt: " + w.Name);
-                Items.Add(w);
+                AddItem(w);
             }
         }
-        public void AddArmor(Armor a)
+        public void AddEquipArmor(Armor a)
         {
             if (armor == null)
                 armor = a;
             else
-                Items.Add(a);
+                AddItem(a);
+        }
+        public void AddItem(Item item)
+        {
+            if (items.Count < inventorySpace)
+                Items.Add(item);
+            
         }
         
 
@@ -104,5 +115,7 @@ namespace ConcenReact
         internal Weapon Weapon { get => weapon; set => weapon = value; }
         internal List<Item> Items { get => items; set => items = value; }
         public int InventorySpace { get => inventorySpace; set => inventorySpace = value; }
+        public int Hp { get => hp; set => hp = value; }
+        public int HpMax { get => hpMax; set => hpMax = value; }
     }
 }

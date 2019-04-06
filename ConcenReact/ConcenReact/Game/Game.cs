@@ -153,7 +153,18 @@ namespace ConcenReact
           
             return gesamt;
         }
-
+        private void DrawPlayer(Player player)
+        {
+            //Spieler zeichnen
+            gesamtGraphics.DrawImage(player.CharacterBitmap, player.XPos * tileSize, player.YPos * tileSize, player.CharacterBitmap.Width, player.CharacterBitmap.Height);
+            DrawHpBar(player);
+        }
+        private void DrawHpBar(Player player)
+        {
+            //HP-Balken     TODO: MAGIC-VALUES ersetzen
+            gesamtGraphics.FillRectangle(menuBrush, player.XPos * tileSize, 2 + tileSize + player.YPos * tileSize, player.CharacterBitmap.Width, 8);
+            gesamtGraphics.FillRectangle(Brushes.Green, 2 + player.XPos * tileSize, 4 + tileSize + player.YPos * tileSize, (tileSize / player.HpMax * player.Hp) - 2, 4);
+        }
         public void DrawGame()
         {
             gesamtGraphics = Graphics.FromImage(gesamt);
@@ -161,9 +172,15 @@ namespace ConcenReact
             {
                 //Hintergrund zeichnen
                 gesamtGraphics.DrawImage(background, 0, 0, pbSizeX, pbSizeY);
+
+
                 //Charaktere zeichnen
-                gesamtGraphics.DrawImage(player1.CharacterBitmap, player1.XPos * tileSize, player1.YPos * tileSize, player1.CharacterBitmap.Width, player1.CharacterBitmap.Height);
-                gesamtGraphics.DrawImage(player2.CharacterBitmap, player2.XPos * tileSize, player2.YPos * tileSize, player2.CharacterBitmap.Width, player2.CharacterBitmap.Height);
+                DrawPlayer(player1);
+                DrawPlayer(player2);
+
+
+
+
                 //Marker zeichnen
                 gesamtGraphics.DrawRectangle(Pens.White, new Rectangle(lastClickedPos.X * tileSize, lastClickedPos.Y * tileSize, tileSize, tileSize));
 
@@ -173,6 +190,19 @@ namespace ConcenReact
 
                 //Aktuelle Tile
                 Tile tempTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
+
+                //Indikator für Interaktion, überprüfen ob Interagierbar + Interaktion nicht leer
+                if(tempTile.IsInteractable && tempTile.GetInteraction()!=null)
+                {
+                    Brush tempBrush;
+                    //Farbe je nach Interaktionsstatus
+                    if (!tempTile.GetInteraction().Interacted)
+                        tempBrush = Brushes.MediumVioletRed;
+                    else
+                        tempBrush = Brushes.Gray;
+ 
+                    gesamtGraphics.FillEllipse(tempBrush, currPlayer.XPos * tileSize, currPlayer.YPos * tileSize, tileSize / 4, tileSize / 4);
+                }
 
                 //Debug-Menü mit Tile-Informationen
                 gesamtGraphics.FillRectangle(menuBrush, new Rectangle(0,pbSizeY-tileSize*4,tileSize*8,tileSize*4));

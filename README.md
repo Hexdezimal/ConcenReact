@@ -1,13 +1,7 @@
 # ConcenReact
 Softwareprojekt 2019, IT17a
 
-Gruppe:
-Dennis Ebel,
-Kevin Groß,
-Oliver Hoffmann,
-Richard McDonald,
-Richard Sodke
-
+Gruppe C
 
 # Doku:
 

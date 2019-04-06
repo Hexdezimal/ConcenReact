@@ -16,16 +16,29 @@ namespace ConcenReact
         int paddingY;    //Padding Y=10% von Y
         int paddingX;    //Padding X=35% von X
 
+        float itemBitmapSize;
+        int tileSize;
+
         float headerPositionY;
         Font headerFont;
         Font textFont;
 
         Graphics context;
-
-
-        public PopupMenu(Brush mB, int wX, int wY, Graphics g, DebugForm df)
+        Brush iconBackgroundBrush;
+        List<Pen> rarityPens;
+        private DebugForm debugForm;
+        public virtual void SetBitmapAndTileSize(Bitmap bmp)
         {
+
+        }
+        public PopupMenu(Brush mB, Brush iconBg,List<Pen> rarityPens, int wX, int wY, Graphics g, DebugForm df)
+        {
+            //Brushes und Pens
             menuBrush = mB;
+            iconBackgroundBrush = iconBg;
+            this.RarityPens = rarityPens;
+
+            //Fenstergröße
             WindowSizeX = wX;
             WindowSizeY = wY;
 
@@ -34,7 +47,7 @@ namespace ConcenReact
             paddingX = (int)(wX * 0.55);
 
 
-            //Größe des gezeichneten Fensters
+            //Größe des gezeichneten Popup-Fensters
             PopupSizeX = WindowSizeX - paddingX;
             PopupSizeY = WindowSizeY - paddingY;
 
@@ -42,9 +55,9 @@ namespace ConcenReact
             headerFont = new Font("Arial", (float)(popupSizeY*0.05),FontStyle.Underline);
             textFont = new Font("Arial",(float)(popupSizeY*0.03));
             HeaderPositionY = (float)(PopupSizeY * 0.15);
+            debugForm = df;
 
-
-
+            //Grafikkontext
             Context = g;
         }
         public void DrawHeader(string header)
@@ -93,6 +106,10 @@ namespace ConcenReact
         public Font HeaderFont { get => headerFont; set => headerFont = value; }
         public Font TextFont { get => textFont; set => textFont = value; }
         public float HeaderPositionY { get => headerPositionY; set => headerPositionY = value; }
-
+        public Brush IconBackgroundBrush { get => iconBackgroundBrush; set => iconBackgroundBrush = value; }
+        public float ItemBitmapSize { get => itemBitmapSize; set => itemBitmapSize = value; }
+        public int TileSize { get => tileSize; set => tileSize = value; }
+        public List<Pen> RarityPens { get => rarityPens; set => rarityPens = value; }
+        public DebugForm DebugForm { get => debugForm; set => debugForm = value; }
     }
 }

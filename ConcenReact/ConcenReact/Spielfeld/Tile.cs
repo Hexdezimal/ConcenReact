@@ -19,7 +19,7 @@ namespace ConcenReact
         
         
 
-        public static Tile GetRandomTile(DebugForm debugForm, int salt)
+        public static Tile GetRandomTile(AssetHandler assetHandler,DebugForm debugForm, int salt)
         {
             Random tempRand = new Random(salt);
             Tile randTile = new Tile();
@@ -64,8 +64,8 @@ namespace ConcenReact
                 randTile.tileBitmap = Properties.Resources.Tile_Plain_House_0;
                 randTile.tileName = "Plain_House_0";
 
-                randTile.interaction = new GetItemInteraction(new Weapon(Properties.Resources.Item_Sword_0_ManniKatt, false,
-                    true, "Manni Katti", 0.0,0.0),"Dorfbesuch","Willkommen im Dummy-Dorf, hier ist ein Item-Test!");
+                //randTile.interaction = new GetItemInteraction(Weapon.GetRandomWeapon(assetHandler),"Dorfbesuch","Willkommen im Dummy-Dorf, hier ist ein Item-Test!");
+                randTile.interaction = GetItemInteraction.GetRandomItemInteraction(assetHandler);
                 
             }
             else if(rand<998)

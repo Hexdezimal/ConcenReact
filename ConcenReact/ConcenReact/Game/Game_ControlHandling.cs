@@ -153,7 +153,9 @@ namespace ConcenReact
             if (keys == Keys.B)
             {
                 if (!inAction())
+                {
                     inBattle = true;
+                }
                 else
                     inBattle = false;
             }

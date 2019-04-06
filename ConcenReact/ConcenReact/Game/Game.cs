@@ -17,7 +17,8 @@ namespace ConcenReact
         private Player player1;
         private Player player2;
         private InventoryPopupMenu invenPopUp;
-
+        
+        
         //Battle-Objekt
         private Battle battle;
 
@@ -40,7 +41,12 @@ namespace ConcenReact
         private Bitmap background;
         private Bitmap gesamt;
         private Graphics gesamtGraphics;
+        private AssetHandler assetHandler;
+        //Grafisches Design für Menüs und Menüelemente
         private Brush menuBrush;
+        private Brush iconBackgroundBrush;
+        private int menuTransparency;
+        private List<Pen> rarityPens;
 
         //Status-Abfragen für aktionen
         private bool inBattle;
@@ -51,7 +57,7 @@ namespace ConcenReact
         private bool inMainMenu;
 
 
-        public Game(DebugForm debugForm,bool debug, Player p1, Player p2, int tS,int pX, int pY)
+        public Game(AssetHandler assetHandler, DebugForm debugForm,bool debug, Player p1, Player p2, int tS,int pX, int pY)
         {
             //Debug-Form
             this.debug = debug;
@@ -60,10 +66,11 @@ namespace ConcenReact
             player1 = p1;
             Player2 = p2;
             
-
+            //Player1 zum Start
             currPlayer = player1;
             currPlayerMovePwr = player1.MovePower;
 
+            //Status-Variablen
             inBattle = false;
             inOptions = false;
             isInteracting = false;
@@ -76,22 +83,36 @@ namespace ConcenReact
             pbSizeY = pY;
             battle = new Battle(pbSizeX, pbSizeY);
 
+            this.assetHandler = assetHandler;
 
             //Random Map
             gameMap = new Karte(pbSizeX / tileSize, pbSizeY / tileSize, tileSize);
-            gameMap.Tiles = Karte.GenerateRandomTiles(pbSizeX / tileSize, pbSizeY / tileSize,null);
+            gameMap.Tiles = Karte.GenerateRandomTiles(assetHandler, pbSizeX / tileSize, pbSizeY / tileSize,null);
             background = gameMap.GetMapBitmap();
 
             //Gesamt-Bitmap
             gesamt = new Bitmap(background.Width, background.Height);
 
-           
-            menuBrush = new SolidBrush(Color.FromArgb(100, Color.DarkBlue));
+            MenuTransparency = 128;
+            menuBrush = new SolidBrush(Color.FromArgb(MenuTransparency, Color.DarkBlue));
+            iconBackgroundBrush = new SolidBrush(Color.FromArgb(MenuTransparency, Color.Black));
+            InitializeRarityPens();
             CheckPlayerOnTile();
-            
+
+            //Asset-Handler initialisieren
+         
             
         }
-
+        private void InitializeRarityPens()
+        {
+            rarityPens = new List<Pen>();
+            rarityPens.Add(Pens.Gray);
+            rarityPens.Add(Pens.Green);
+            rarityPens.Add(Pens.Blue);
+            rarityPens.Add(Pens.Violet);
+            rarityPens.Add(Pens.Yellow);
+            rarityPens.Add(Pens.Orange);
+        }
         //Zusammenfassung der Aktionen
         private bool inAction()
         {
@@ -220,7 +241,7 @@ namespace ConcenReact
                     {
 
                         //Temporäres Pop-Up zur Darstellung
-                        GetItemPopupMenu itemPopup = new GetItemPopupMenu((GetItemInteraction)tempTile.GetInteraction(), menuBrush, pbSizeX, pbSizeY,gesamtGraphics,debugForm);
+                        GetItemPopupMenu itemPopup = new GetItemPopupMenu((GetItemInteraction)tempTile.GetInteraction(), menuBrush,iconBackgroundBrush,rarityPens, pbSizeX, pbSizeY,gesamtGraphics,debugForm);
 
                         //Anzeige des Pop-Ups
                         itemPopup.DrawPopup();
@@ -235,7 +256,7 @@ namespace ConcenReact
             if(inInventory)
             {
                 //Festlegene des Inventar-Pop-Ups des Spielers, welcher am Zug ist
-                invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush, pbSizeX, pbSizeY, gesamtGraphics,debugForm);
+                invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush,iconBackgroundBrush,rarityPens, pbSizeX, pbSizeY, gesamtGraphics,debugForm);
                 //Anzeigen des Pop-Ups
                 invenPopUp.DrawPopup();
             }
@@ -268,5 +289,6 @@ namespace ConcenReact
         public int GameTime { get => gameTime; set => gameTime = value; }
         internal Player Player1 { get => player1; set => player1 = value; }
         internal Player Player2 { get => player2; set => player2 = value; }
+        public int MenuTransparency { get => menuTransparency; set => menuTransparency = value; }
     }
 }

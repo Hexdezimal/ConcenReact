@@ -7,16 +7,21 @@ using System.Threading.Tasks;
 
 namespace ConcenReact
 {
-    class Armor : Item
+    class Armor : ItemWithIcon
     {
         private double defenseModifier; //Prozentsatz für Verteidigung
 
 
-        public Armor(Bitmap itemBitmap, bool isUsable, bool isEquipable, string name, double defenseModifier, Bitmap armorBitmap)
-            :base(itemBitmap, isUsable,isEquipable,name)
+        public Armor(AssetHandler assetHandler, Bitmap itemBitmap, bool isUsable, bool isEquipable, string name,string prefix, double defenseModifier, int rarity)
+            :base(assetHandler, itemBitmap, isUsable,isEquipable,name,prefix,rarity)
         {
             this.defenseModifier = defenseModifier;
         }
+        public Armor(ItemWithIcon item,double defenseModifier):base(item)
+        {
+            this.defenseModifier = defenseModifier;
+        }
+
         //Standard-Konstruktor für Leeres Item
         public Armor():base()
         {

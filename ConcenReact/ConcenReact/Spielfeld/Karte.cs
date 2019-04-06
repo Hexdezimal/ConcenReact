@@ -19,7 +19,7 @@ namespace ConcenReact
             this.tileSize = tileSize;
             Tiles = new Tile[xTiles, yTiles];
         }
-        public static Tile[,] GenerateRandomTiles(int xTiles,int yTiles, DebugForm debugForm)
+        public static Tile[,] GenerateRandomTiles(AssetHandler assetHandler, int xTiles,int yTiles, DebugForm debugForm)
         {
             Tile[,] tiles = new Tile[xTiles,yTiles];
             Random rSalt = new Random();
@@ -27,7 +27,7 @@ namespace ConcenReact
             {
                 for(int x=0;x<xTiles;x++)
                 {
-                    tiles[x, y] = Tile.GetRandomTile(debugForm,rSalt.Next());
+                    tiles[x, y] = Tile.GetRandomTile(assetHandler, debugForm,rSalt.Next());
                 }
             }
 

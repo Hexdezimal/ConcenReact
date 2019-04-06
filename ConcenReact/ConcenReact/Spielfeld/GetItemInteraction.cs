@@ -14,7 +14,25 @@ namespace ConcenReact
         {
                 this.GetItem = getItem;
         }
+        public static GetItemInteraction GetRandomItemInteraction(AssetHandler assetHandler)
+        {
+            GetItemInteraction interaction;
+            Item item;
 
+            Random r = new Random();
+            int rand = 0;
+
+            if (rand == 0) //Weapon
+            {
+                interaction = new GetItemInteraction(Weapon.GetRandomWeapon(assetHandler), "Interaktion", "Interaktiontext");
+            }
+            else
+                interaction = new GetItemInteraction(Weapon.GetRandomWeapon(assetHandler), "Interak", "ItnerText");
+
+            
+
+            return interaction;
+        }
 
         public Item Interact()
         {

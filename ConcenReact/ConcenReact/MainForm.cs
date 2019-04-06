@@ -26,6 +26,7 @@ namespace ConcenReact
 
         private Game mainGame;
         private DebugForm debugForm;
+        private AssetHandler assetHandler;
 
         private MainMenu mainMenu;
         private MainMenuEntry lastClickedEntry;
@@ -47,6 +48,8 @@ namespace ConcenReact
             inMainMenu = true;
             gameInitialized = false; //Spiellogik erst nach Menü initialisieren
             mainMenuInitialized = false;
+
+            assetHandler = new AssetHandler();
 
             timerGameTick.Start();
 
@@ -181,7 +184,7 @@ namespace ConcenReact
         }
         private void InitializeDebugGame()
         {
-            mainGame = new Game(debugForm,debug,new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
+            mainGame = new Game(assetHandler, debugForm,debug,new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
 
         }
         private void InitializeDebugMainMenu()

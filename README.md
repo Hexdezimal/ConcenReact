@@ -8,6 +8,7 @@ Gruppe C
 ## Steuerung (TODO: Anpassbare Steuerung)
 - WASD/Richtungstaste - Bewegen im Menü/ im Spiel
 - ESC - Zurück zum Hauptmenü
+- Enter - Aktionstaste
 - I - Inventar
 - B - Debug-Battlescreen starten
 

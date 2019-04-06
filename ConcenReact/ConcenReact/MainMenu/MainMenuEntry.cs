@@ -10,20 +10,27 @@ namespace ConcenReact
     {
         private string name;
         private bool pressed;
+        private DebugForm debugForm;
 
-        public MainMenuEntry(string name)
+        public MainMenuEntry(DebugForm debugForm, string name)
         {
             this.name = name;
             pressed = false;
+            this.DebugForm = debugForm;
         }
 
+        protected MainMenuEntry(string name)
+        {
+            this.name = name;
+        }
 
-        public void Press()
+        public virtual void Press()
         {
             Pressed = true;
         }
 
         public string Name { get => name; set => name = value; }
         public bool Pressed { get => pressed; set => pressed = value; }
+        public DebugForm DebugForm { get => debugForm; set => debugForm = value; }
     }
 }

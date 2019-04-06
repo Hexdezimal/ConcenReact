@@ -50,8 +50,8 @@ namespace ConcenReact
             if (isEnemy)
             {
                 ChangeColorToEnemy();
-                XPos = 10;
-                YPos = 10;
+                XPos = 1;
+                YPos = 1;
 
             }
            
@@ -99,6 +99,7 @@ namespace ConcenReact
         }
         public void AddItem(Item item)
         {
+            
             if (items.Count < inventorySpace)
                 Items.Add(item);
             

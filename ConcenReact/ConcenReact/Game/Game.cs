@@ -51,10 +51,11 @@ namespace ConcenReact
         private bool inMainMenu;
 
 
-        public Game(Player p1, Player p2, int tS,int pX, int pY)
+        public Game(DebugForm debugForm,bool debug, Player p1, Player p2, int tS,int pX, int pY)
         {
             //Debug-Form
-            debug = true;
+            this.debug = debug;
+            this.debugForm = debugForm;
             //Spielerzuweisung
             player1 = p1;
             Player2 = p2;
@@ -87,19 +88,10 @@ namespace ConcenReact
            
             menuBrush = new SolidBrush(Color.FromArgb(100, Color.DarkBlue));
             CheckPlayerOnTile();
-            DebugMode();
+            
             
         }
-        private void DebugMode()
-        {
-            if (debug)
-            {
-                debugForm = new DebugForm();
-                debugForm.Show();
 
-            }
-            else debugForm = null;
-        }
         //Zusammenfassung der Aktionen
         private bool inAction()
         {
@@ -270,7 +262,6 @@ namespace ConcenReact
         public void DebugClose()
         {
             //Freigeben von Resourcen
-
             debugForm.Close();
         }
         //Properties

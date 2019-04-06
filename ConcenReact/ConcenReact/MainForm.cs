@@ -23,16 +23,26 @@ namespace ConcenReact
     {
         private int gamePbWidth, gamePbHeight, border, tileSize;
         private int xTiles, yTiles;
+
         private Game mainGame;
+        private DebugForm debugForm;
+
         private MainMenu mainMenu;
+        private MainMenuEntry lastClickedEntry;
 
         private bool inMainMenu;
         private bool gameInitialized;
         private bool mainMenuInitialized;
+
+        private bool debug;
         public ConcenReact()
         {
             //Initialize Block
             InitializeComponent();
+
+            //DEBUG
+            debug = true;
+            DebugMode();
 
             inMainMenu = true;
             gameInitialized = false; //Spiellogik erst nach Menü initialisieren
@@ -41,11 +51,22 @@ namespace ConcenReact
             timerGameTick.Start();
 
         }
+        private void DebugMode()
+        {
+            if (debug)
+            {
+                debugForm = new DebugForm();
+                debugForm.Show();
+
+            }
+            else debugForm = null;
+        }
         private void timerGameTick_Tick(object sender, EventArgs e)
         {
-            
+            //Abfrage ob in Hauptmenü
             if(!inMainMenu)
             {
+                //Abfrage, ob erster Game-Start
                 if(!gameInitialized)
                 {
                     StartGame();
@@ -55,6 +76,7 @@ namespace ConcenReact
             }
             else
             {
+                //Abfrage, ob erster Menü-Start
                 if(!mainMenuInitialized)
                 {
                     StartMainMenu();
@@ -62,24 +84,49 @@ namespace ConcenReact
                 }
                 mainMenu.MainMenuTick(pbMainGame);
 
-                if(mainMenu.StartGameMenuEntryPressed())
+
+                if (mainMenu.StartGameMenuEntryPressed() )
                 {
                     inMainMenu = false;
-                    
+                    lastClickedEntry = mainMenu.Entries[mainMenu.CurrentMenuEntry];
+
+
                 }
-                if(mainMenu.CloseMenuEntryPressed())
+                if(mainMenu.CloseMenuEntryPressed() )
                 {
                     this.Close();
+                    lastClickedEntry = mainMenu.Entries[mainMenu.CurrentMenuEntry];
                 }
+                if(mainMenu.VisualMenuEntryPressed())
+                {
+                    ((VisualMenuEntry)mainMenu.Entries[mainMenu.CurrentMenuEntry]).DrawVisualMenuEntry(pbMainGame);
+
+                    lastClickedEntry = mainMenu.Entries[mainMenu.CurrentMenuEntry];
+
+                }
+
+
             }
 
         }
         public void Reset()
         {
-            mainGame.DebugClose();
             inMainMenu = true;
             gameInitialized = false; //Spiellogik erst nach Menü initialisieren
+
+            //Reset MainMenu Settings
             mainMenuInitialized = false;
+            
+            if(mainMenu!=null)
+            {
+                mainMenu.InVisualEntry = false;
+                mainMenu.ResetPressed();
+            }
+            
+            if (lastClickedEntry.GetType()==typeof(VisualMenuEntry))
+            {
+                ((VisualMenuEntry)lastClickedEntry).Close();    //Visuelles Menü schließen
+            }
         }
         private void ConcenReact_KeyDown(object sender, KeyEventArgs e)
         {
@@ -92,13 +139,17 @@ namespace ConcenReact
                 }
                 else
                 {
-                    mainMenu.KeyHandler(e.KeyCode);
+                    if(mainMenu.InVisualEntry)
+                    {
+                        ((VisualMenuEntry)lastClickedEntry).KeyHandler(e.KeyCode);
+                    }
+                    else
+                        mainMenu.KeyHandler(e.KeyCode);
                 }
 
             }
             else
             {
-                if(!inMainMenu)
                     Reset();
             }
         }
@@ -130,12 +181,12 @@ namespace ConcenReact
         }
         private void InitializeDebugGame()
         {
-            mainGame = new Game(new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
+            mainGame = new Game(debugForm,debug,new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
 
         }
         private void InitializeDebugMainMenu()
         {
-            mainMenu = new MainMenu(gamePbWidth, gamePbHeight);
+            mainMenu = new MainMenu(debugForm,gamePbWidth, gamePbHeight);
         }
         //Initialisieren der Form für das Hauptmenü
         private void InitializeFormMainMenu()

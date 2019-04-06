@@ -22,9 +22,11 @@ namespace ConcenReact
         private int entryWidth;
         private int padding;
 
+        private bool inVisualEntry;
+
         private List<MainMenuEntry> entries;
 
-        public MainMenu(int pbWidth, int pbHeight)
+        public MainMenu(DebugForm debugForm, int pbWidth, int pbHeight)
         {
 
             background = new Bitmap(pbWidth, pbHeight);
@@ -39,15 +41,27 @@ namespace ConcenReact
             entryWidth = pbWidth / 4;
             padding = entryHeight / 4;
 
+            //Aktion
+            InVisualEntry = false;
+
             //Brushes für Menu-Einträge und wenn eins markiert ist
             menuBrush = new SolidBrush(Color.FromArgb(100,Color.Blue));
             highlightBrush = new SolidBrush(Color.FromArgb(100, Color.LightBlue));
 
             //DEBUG
-            AddEntry(new StartGameMenuEntry("Start"));
-            AddEntry(new CloseMenuEntry("Beenden"));
+            AddEntry(new StartGameMenuEntry(debugForm,"Start"));
+            AddEntry(new CloseMenuEntry(debugForm,"Beenden"));
+            AddEntry(new VisualMenuEntry(debugForm,pbWidth, pbHeight, menuBrush, "VisualTest", "TITELZEILE"));
 
             CreateBackground();
+        }
+        public void ResetPressed()
+        {
+            foreach(MainMenuEntry e in entries)
+            {
+                e.Pressed = false;
+            }
+
         }
         public bool StartGameMenuEntryPressed()
         {
@@ -75,6 +89,25 @@ namespace ConcenReact
             }
             return temp;
         }
+        public bool VisualMenuEntryPressed()
+        {
+            bool temp = false;
+            
+            foreach(MainMenuEntry e in entries)
+            {
+                if(e.GetType()==typeof(VisualMenuEntry))
+                {
+                    if (e.Pressed)
+                    {
+                        temp = true;
+                        InVisualEntry = true;
+                    }
+                }
+            }
+            
+            return temp;
+        }
+
         public void AddEntry(MainMenuEntry entry)
         {
             Entries.Add(entry);
@@ -131,13 +164,29 @@ namespace ConcenReact
         {
             if(key == Keys.Down)
             {
-                if (currentMenuEntry + 1 < Entries.Count)
-                    currentMenuEntry++;
+                if(InVisualEntry)
+                {
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key);
+                }
+                else
+                {
+                    if (currentMenuEntry + 1 < Entries.Count && !InVisualEntry)
+                        currentMenuEntry++;
+
+                }
             }
             if(key==Keys.Up)
             {
-                if (currentMenuEntry - 1 >= 0)
-                    currentMenuEntry--;
+                if(InVisualEntry)
+                {
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key);
+                }
+                else
+                {
+                    if (currentMenuEntry - 1 >= 0 && !InVisualEntry)
+                        currentMenuEntry--;
+
+                }
             }
             if(key==Keys.Enter)
             {
@@ -160,5 +209,6 @@ namespace ConcenReact
         public int EntryWidth { get => entryWidth; set => entryWidth = value; }
         public int Padding { get => padding; set => padding = value; }
         internal List<MainMenuEntry> Entries { get => entries; set => entries = value; }
+        public bool InVisualEntry { get => inVisualEntry; set => inVisualEntry = value; }
     }
 }

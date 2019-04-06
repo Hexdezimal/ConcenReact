@@ -8,7 +8,7 @@ namespace ConcenReact
 {
     class OptionsMenuEntry : MainMenuEntry
     {
-        public OptionsMenuEntry(string name) : base(name)
+        public OptionsMenuEntry(DebugForm debugForm,string name) : base(debugForm, name)
         {
         }
     }

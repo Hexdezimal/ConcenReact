@@ -8,7 +8,7 @@ namespace ConcenReact
 {
     class CloseMenuEntry : MainMenuEntry
     {
-        public CloseMenuEntry(string name) : base(name)
+        public CloseMenuEntry(DebugForm debugForm, string name) : base(debugForm, name)
         {
         }
     }

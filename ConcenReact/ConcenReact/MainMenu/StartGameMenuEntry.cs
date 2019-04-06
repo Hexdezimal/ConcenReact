@@ -8,7 +8,7 @@ namespace ConcenReact
 {
     class StartGameMenuEntry : MainMenuEntry
     {
-        public StartGameMenuEntry(string name) : base(name)
+        public StartGameMenuEntry(DebugForm debugForm, string name) : base(debugForm, name)
         {
 
         }

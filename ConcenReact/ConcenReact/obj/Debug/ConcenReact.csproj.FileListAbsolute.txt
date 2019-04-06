@@ -1,0 +1,11 @@
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\bin\Debug\ConcenReact.exe.config
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\bin\Debug\ConcenReact.exe
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\bin\Debug\ConcenReact.pdb
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.csprojAssemblyReference.cache
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.ConcenReact.resources
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.Properties.Resources.resources
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.csproj.GenerateResource.cache
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.csproj.CoreCompileInputs.cache
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.exe
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.pdb
+C:\Users\olive\source\repos\ConcenReact\ConcenReact\obj\Debug\ConcenReact.DebugForm.resources

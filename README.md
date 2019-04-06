@@ -33,11 +33,11 @@ Die abstrakte Item-Klasse beinhaltet die Bitmap, Namen und 2 Status-Indikatoren
 - Bitmap itemBitmap (Bitmap des Items, sichtbar im Inventar)
 
 ### Armor-Klasse
-Die Armor-Klasse ist abgeleitet von der Item-Basisklasse und beinhaltet zusätzlich einen sog. defenseModifier (in %)
+Die Armor-Klasse ist abgeleitet von der ItemWithIcon-Basisklasse und beinhaltet zusätzlich einen sog. defenseModifier (in %)
 #### Attribute
 - double defenseModifier - Verteidigung um bestimmten %-Satz erhöhen
 
 ### Weapon-Klasse
-Die Weapon-Klasse ist abgeleitet von der Item-Basisklasse und beinhaltet zusätzlich einen sog. attackModifier und scoreModifier (in %)
+Die Weapon-Klasse ist abgeleitet von der ItemWithIcon-Basisklasse und beinhaltet zusätzlich einen sog. attackModifier und scoreModifier (in %)
 - double attackModifier - Angriff um bestimmten %-Satz erhöhen
 - double scoreModifier - Score nach Kampf um bestimmten %-Satz erhöhen

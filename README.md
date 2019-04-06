@@ -6,10 +6,10 @@ Gruppe C
 # Doku:
 
 ## Steuerung (TODO: Anpassbare Steuerung)
-WASD/Richtungstaste - Bewegen im Menü/ im Spiel
-ESC - Zurück zum Hauptmenü
-I - Inventar
-B - Debug-Battlescreen starten
+- WASD/Richtungstaste - Bewegen im Menü/ im Spiel
+- ESC - Zurück zum Hauptmenü
+- I - Inventar
+- B - Debug-Battlescreen starten
 
 ## Charakter-Klasse
 Die abstrakte Charakter-Klasse beinhaltet die Bitmaps und den Namen des Charakters

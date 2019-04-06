@@ -26,6 +26,7 @@ namespace ConcenReact
                         {
                             player1.XPos++;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -38,7 +39,7 @@ namespace ConcenReact
                         {
                             player1.YPos--;
                             currPlayerMovePwr--;
-
+                            isInteracting = false;
                         }
 
                     }
@@ -51,6 +52,7 @@ namespace ConcenReact
                         {
                             player1.YPos++;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -63,6 +65,7 @@ namespace ConcenReact
                         {
                             player1.XPos--;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -84,6 +87,7 @@ namespace ConcenReact
                         {
                             currPlayer.XPos++;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -96,7 +100,7 @@ namespace ConcenReact
                         {
                             currPlayer.YPos--;
                             currPlayerMovePwr--;
-
+                            isInteracting = false;
                         }
 
                     }
@@ -109,6 +113,7 @@ namespace ConcenReact
                         {
                             currPlayer.YPos++;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -121,6 +126,7 @@ namespace ConcenReact
                         {
                             currPlayer.XPos--;
                             currPlayerMovePwr--;
+                            isInteracting = false;
                         }
 
                     }
@@ -199,6 +205,7 @@ namespace ConcenReact
                             isInteracting = false;  //Zurücksetzen des Status bei nicht zutreffend
 
                     }
+
                 }
                 else
                     isInteracting = false;  //Zurücksetzen des Status bei nicht zutreffend

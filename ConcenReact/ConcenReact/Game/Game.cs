@@ -48,6 +48,8 @@ namespace ConcenReact
         private bool isInteracting;
         private bool inInventory;
         private bool debug;
+        private bool inMainMenu;
+
 
         public Game(Player p1, Player p2, int tS,int pX, int pY)
         {
@@ -112,6 +114,7 @@ namespace ConcenReact
         }
         private void ChangeTurn()
         {
+            //Runde wechseln;
             if(currPlayer==player1)
             {
                 currPlayer = player2;
@@ -145,12 +148,12 @@ namespace ConcenReact
             gamePB.Image = GetGesamtBitmap();
 
             //DEBUG TODO: ENTFERNEN
-            currPlayerMovePwr = 99;
+            if(debug)
+                currPlayerMovePwr = 99;
         }
         
         public Bitmap GetGesamtBitmap()
         {
-          
             return gesamt;
         }
         private void DrawPlayer(Player player)
@@ -173,19 +176,14 @@ namespace ConcenReact
                 //Hintergrund zeichnen
                 gesamtGraphics.DrawImage(background, 0, 0, pbSizeX, pbSizeY);
 
-
                 //Charaktere zeichnen
                 DrawPlayer(player1);
                 DrawPlayer(player2);
 
 
-
-
-                //Marker zeichnen
+                //Click-Marker zeichnen
                 gesamtGraphics.DrawRectangle(Pens.White, new Rectangle(lastClickedPos.X * tileSize, lastClickedPos.Y * tileSize, tileSize, tileSize));
 
-
-                
 
 
                 //Aktuelle Tile
@@ -268,6 +266,12 @@ namespace ConcenReact
 
             sMenu += "Tilename: " + tempTile.TileName + "\n";
             return sMenu;
+        }
+        public void DebugClose()
+        {
+            //Freigeben von Resourcen
+
+            debugForm.Close();
         }
         //Properties
         public int GameTime { get => gameTime; set => gameTime = value; }

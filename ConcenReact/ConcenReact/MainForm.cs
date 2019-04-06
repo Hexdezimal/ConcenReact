@@ -24,44 +24,130 @@ namespace ConcenReact
         private int gamePbWidth, gamePbHeight, border, tileSize;
         private int xTiles, yTiles;
         private Game mainGame;
+        private MainMenu mainMenu;
 
-        private void timerGameTick_Tick(object sender, EventArgs e)
-        {
-            mainGame.GameTick(pbMainGame);
-           // pbMainGame.Image = mainGame.DrawGame();
-        }
-
-        private void ConcenReact_KeyDown(object sender, KeyEventArgs e)
-        {
-            //Tastendruck weiterreichen an die Spieleinstanz
-            mainGame.KeyHandler(e.KeyCode);
-        }
-
-        private void pbMainGame_MouseClick(object sender, MouseEventArgs e)
-        {
-            //Klick-Koordinaten weiterreichen an die Spieleinstanz
-            mainGame.ClickGame(e.Location);
-        }
-
+        private bool inMainMenu;
+        private bool gameInitialized;
+        private bool mainMenuInitialized;
         public ConcenReact()
         {
             //Initialize Block
             InitializeComponent();
 
-            InitializeForm();
-
-            //Debug TODO: Normale methode für richtige Runde
-            InitializeDebugGame();
-
-            mainGame.DrawGame();
-            pbMainGame.Image = mainGame.GetGesamtBitmap();
+            inMainMenu = true;
+            gameInitialized = false; //Spiellogik erst nach Menü initialisieren
+            mainMenuInitialized = false;
 
             timerGameTick.Start();
+
+        }
+        private void timerGameTick_Tick(object sender, EventArgs e)
+        {
+            
+            if(!inMainMenu)
+            {
+                if(!gameInitialized)
+                {
+                    StartGame();
+                    this.Focus();
+                }
+                mainGame.GameTick(pbMainGame);
+            }
+            else
+            {
+                if(!mainMenuInitialized)
+                {
+                    StartMainMenu();
+                    
+                }
+                mainMenu.MainMenuTick(pbMainGame);
+
+                if(mainMenu.StartGameMenuEntryPressed())
+                {
+                    inMainMenu = false;
+                    
+                }
+                if(mainMenu.CloseMenuEntryPressed())
+                {
+                    this.Close();
+                }
+            }
+
+        }
+        public void Reset()
+        {
+            mainGame.DebugClose();
+            inMainMenu = true;
+            gameInitialized = false; //Spiellogik erst nach Menü initialisieren
+            mainMenuInitialized = false;
+        }
+        private void ConcenReact_KeyDown(object sender, KeyEventArgs e)
+        {
+            //Tastendruck weiterreichen an die Spieleinstanz
+            if (e.KeyCode != Keys.Escape )
+            {
+                if (!inMainMenu)
+                {
+                    mainGame.KeyHandler(e.KeyCode);
+                }
+                else
+                {
+                    mainMenu.KeyHandler(e.KeyCode);
+                }
+
+            }
+            else
+            {
+                if(!inMainMenu)
+                    Reset();
+            }
+        }
+
+        private void pbMainGame_MouseClick(object sender, MouseEventArgs e)
+        {
+            //Klick-Koordinaten weiterreichen an die Spieleinstanz
+            if(!inMainMenu)
+            {
+                mainGame.ClickGame(e.Location);
+
+            }
+        }
+
+        
+        private void StartGame()
+        {
+            InitializeForm();
+            InitializeDebugGame();
+            //pbMainGame.Image = mainGame.GetGesamtBitmap();
+            gameInitialized = true;
+        }
+        private void StartMainMenu()
+        {
+            InitializeFormMainMenu();
+            InitializeDebugMainMenu();
+            mainMenuInitialized = true;
 
         }
         private void InitializeDebugGame()
         {
             mainGame = new Game(new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
+
+        }
+        private void InitializeDebugMainMenu()
+        {
+            mainMenu = new MainMenu(gamePbWidth, gamePbHeight);
+        }
+        //Initialisieren der Form für das Hauptmenü
+        private void InitializeFormMainMenu()
+        {
+            border = 15;
+            tileSize = 32;
+
+            gamePbWidth = 800;
+            gamePbHeight = 600;
+
+            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
+            pbMainGame.Location = new Point(border, border);
         }
         private void InitializeForm()
         {

@@ -65,7 +65,12 @@
   <ItemGroup>
     <Compile Include="Control.cs" />
     <Compile Include="Game\Game_ControlHandling.cs" />
+    <Compile Include="MainMenu\CloseMenuEntry.cs" />
+    <Compile Include="MainMenu\MainMenuEntry.cs" />
     <Compile Include="Items\EmptyItem.cs" />
+    <Compile Include="MainMenu\MainMenu.cs" />
+    <Compile Include="MainMenu\OptionsMenuEntry.cs" />
+    <Compile Include="MainMenu\StartGameMenuEntry.cs" />
     <Compile Include="Menüs\GetItemPopupMenu.cs" />
     <Compile Include="Menüs\InventoryPopupMenu.cs" />
     <Compile Include="Menüs\PopupMenu.cs" />

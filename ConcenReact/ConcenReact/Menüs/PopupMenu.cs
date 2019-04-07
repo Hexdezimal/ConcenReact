@@ -4,12 +4,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ConcenReact
 {
-    class PopupMenu
+    abstract class PopupMenu
     {
-        Brush menuBrush;
         
         int windowSizeX, windowSizeY;
         int popupSizeX, popupSizeY;
@@ -23,18 +23,17 @@ namespace ConcenReact
         Font headerFont;
         Font textFont;
 
+        Brush menuBrush;
+        Brush highlightBrush;
         Graphics context;
         Brush iconBackgroundBrush;
         List<Pen> rarityPens;
         private DebugForm debugForm;
-        public virtual void SetBitmapAndTileSize(Bitmap bmp)
-        {
 
-        }
         public PopupMenu(Brush mB, Brush iconBg,List<Pen> rarityPens, int wX, int wY, Graphics g, DebugForm df)
         {
             //Brushes und Pens
-            menuBrush = mB;
+            MenuBrush = mB;
             iconBackgroundBrush = iconBg;
             this.RarityPens = rarityPens;
 
@@ -57,8 +56,17 @@ namespace ConcenReact
             HeaderPositionY = (float)(PopupSizeY * 0.15);
             debugForm = df;
 
+            //Menü-Farbe als Highlight farbe in hell anzeigen
+            CreateHighlightBrush();
+
             //Grafikkontext
             Context = g;
+        }
+        private void CreateHighlightBrush()
+        {
+            Color temp = (menuBrush as SolidBrush).Color;
+            temp = ControlPaint.Light(temp,50);
+            highlightBrush = new SolidBrush(Color.FromArgb(128,temp));
         }
         public void DrawHeader(string header)
         {
@@ -83,7 +91,7 @@ namespace ConcenReact
         //Zeichnen des Fensters
         public virtual void DrawPopup()
         {
-            Context.FillRectangle(menuBrush, GetMenuRectangleF());
+            Context.FillRectangle(MenuBrush, GetMenuRectangleF());
         }
         //X-Position der Überschrift anhand der Fenstergröße zurückgeben
         public float GetHeaderPositionX(string s)
@@ -93,8 +101,17 @@ namespace ConcenReact
         public void DrawSeperatorLine(Pen p, float y)
         {
             Context.DrawLine(p, GetMenuRectangleF().X, y, GetMenuRectangleF().Right, y);
-            //Context.DrawLine(new Pen(Color.DarkGray, itemBitmapSize / 16), GetMenuRectangle().X, yPosItemBitmap + itemBitmapSize * 1.5f, GetMenuRectangleF().Right, yPosItemBitmap + itemBitmapSize * 1.5f);
+            
         }
+
+        /*
+         * Abstrakte Methoden
+         * */ 
+        //Keyhandler für Steuerung im Pop-up
+        public abstract void KeyHandler(Keys key);
+        //Größe der Elemente setzen
+        public abstract void SetBitmapAndTileSize(Bitmap bmp);
+
 
         //Properties
         public Graphics Context { get => context; set => context = value; }
@@ -111,5 +128,7 @@ namespace ConcenReact
         public int TileSize { get => tileSize; set => tileSize = value; }
         public List<Pen> RarityPens { get => rarityPens; set => rarityPens = value; }
         public DebugForm DebugForm { get => debugForm; set => debugForm = value; }
+        public Brush HighlightBrush { get => highlightBrush; set => highlightBrush = value; }
+        public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
     }
 }

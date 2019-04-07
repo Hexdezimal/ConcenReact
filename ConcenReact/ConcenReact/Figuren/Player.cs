@@ -17,6 +17,7 @@ namespace ConcenReact
         private Guid saveGUID;
         private bool isEnemy;
         private int inventorySpace;
+        private int equipmentCount;
 
         private Armor armor;
         private Weapon weapon;
@@ -43,9 +44,11 @@ namespace ConcenReact
 
             //Stats
             MovePower = 5;
-            InventorySpace = 4;
+            InventorySpace = 2;
             hpMax = 10;
             hp = hpMax;
+            equipmentCount = 2;
+
 
             if (isEnemy)
             {
@@ -118,5 +121,6 @@ namespace ConcenReact
         public int InventorySpace { get => inventorySpace; set => inventorySpace = value; }
         public int Hp { get => hp; set => hp = value; }
         public int HpMax { get => hpMax; set => hpMax = value; }
+        public int EquipmentCount { get => equipmentCount; set => equipmentCount = value; }
     }
 }

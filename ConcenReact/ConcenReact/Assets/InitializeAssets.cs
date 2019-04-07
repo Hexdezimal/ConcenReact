@@ -33,6 +33,8 @@ namespace ConcenReact
             uniqueWeaponNames = new List<string>();
             rarityPrefix = new List<List<string>>();
             uniqueWeaponIcons = new List<Bitmap>();
+
+
             prefabWeapons = new List<Weapon>();
 
             Initialize();

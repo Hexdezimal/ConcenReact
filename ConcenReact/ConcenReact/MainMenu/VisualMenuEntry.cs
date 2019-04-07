@@ -45,8 +45,9 @@ namespace ConcenReact
             gesamtGraphic = Graphics.FromImage(gesamt);
             gesamtGraphic.DrawImage(background, 0, 0, background.Width, background.Height);
 
-
+            
             pb.Image = gesamt;
+            gesamtGraphic.Dispose();
         }
         
         public virtual Bitmap GetGesamtBitmap()

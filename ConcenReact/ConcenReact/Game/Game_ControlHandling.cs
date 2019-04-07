@@ -15,12 +15,16 @@ namespace ConcenReact
         {
             //Steuerung blockieren
 
-            if (currPlayer == player1 && currPlayerMovePwr > 0 && !inBattle && !inOptions)
-            {
+            if (currPlayer == player1 && currPlayerMovePwr > 0 && !inBattle )
+            { 
                 gameMap.Tiles[player1.XPos, player1.YPos].LeaveTile(player1);
                 if (keys == Keys.Right || keys == Keys.D)
                 {
-                    if (player1.XPos + 1 < pbSizeX / tileSize)
+                    if(inInventory)
+                    {
+                        invenPopUp.KeyHandler(keys);
+                    }
+                    else if (player1.XPos + 1 < pbSizeX / tileSize)
                     {
                         if (gameMap.Tiles[player1.XPos + 1, player1.YPos].IsEnterable)
                         {
@@ -33,7 +37,11 @@ namespace ConcenReact
                 }
                 if (keys == Keys.Up || keys == Keys.W)
                 {
-                    if (player1.YPos - 1 >= 0)
+                    if (inInventory)
+                    {
+                        invenPopUp.KeyHandler(keys);
+                    }
+                    else if (player1.YPos - 1 >= 0)
                     {
                         if (gameMap.Tiles[player1.XPos, player1.YPos - 1].IsEnterable)
                         {
@@ -46,7 +54,11 @@ namespace ConcenReact
                 }
                 if (keys == Keys.Down || keys == Keys.S)
                 {
-                    if (player1.YPos + 1 < pbSizeY / tileSize)
+                    if (inInventory)
+                    {
+                        invenPopUp.KeyHandler(keys);
+                    }
+                    else if (player1.YPos + 1 < pbSizeY / tileSize)
                     {
                         if (gameMap.Tiles[player1.XPos, player1.YPos + 1].IsEnterable)
                         {
@@ -59,7 +71,11 @@ namespace ConcenReact
                 }
                 if (keys == Keys.Left || keys == Keys.A)
                 {
-                    if (player1.XPos - 1 >= 0)
+                    if (inInventory)
+                    {
+                        invenPopUp.KeyHandler(keys);
+                    }
+                    else if (player1.XPos - 1 >= 0)
                     {
                         if (gameMap.Tiles[player1.XPos - 1, player1.YPos].IsEnterable)
                         {
@@ -76,63 +92,63 @@ namespace ConcenReact
              * NUR TEMPORÄR UM SPIELER2 MANUELL ZU STEUERN
              * 
              * /*/
-            else
-            {
-                gameMap.Tiles[currPlayer.XPos, currPlayer.YPos].LeaveTile(currPlayer);
-                if (keys == Keys.Right || keys == Keys.D)
-                {
-                    if (currPlayer.XPos + 1 < pbSizeX / tileSize)
-                    {
-                        if (gameMap.Tiles[currPlayer.XPos + 1, currPlayer.YPos].IsEnterable)
-                        {
-                            currPlayer.XPos++;
-                            currPlayerMovePwr--;
-                            isInteracting = false;
-                        }
+            //else
+            //{
+            //    gameMap.Tiles[currPlayer.XPos, currPlayer.YPos].LeaveTile(currPlayer);
+            //    if (keys == Keys.Right || keys == Keys.D)
+            //    {
+            //        if (currPlayer.XPos + 1 < pbSizeX / tileSize)
+            //        {
+            //            if (gameMap.Tiles[currPlayer.XPos + 1, currPlayer.YPos].IsEnterable)
+            //            {
+            //                currPlayer.XPos++;
+            //                currPlayerMovePwr--;
+            //                isInteracting = false;
+            //            }
 
-                    }
-                }
-                if (keys == Keys.Up || keys == Keys.W)
-                {
-                    if (currPlayer.YPos - 1 >= 0)
-                    {
-                        if (gameMap.Tiles[currPlayer.XPos, currPlayer.YPos - 1].IsEnterable)
-                        {
-                            currPlayer.YPos--;
-                            currPlayerMovePwr--;
-                            isInteracting = false;
-                        }
+            //        }
+            //    }
+            //    if (keys == Keys.Up || keys == Keys.W)
+            //    {
+            //        if (currPlayer.YPos - 1 >= 0)
+            //        {
+            //            if (gameMap.Tiles[currPlayer.XPos, currPlayer.YPos - 1].IsEnterable)
+            //            {
+            //                currPlayer.YPos--;
+            //                currPlayerMovePwr--;
+            //                isInteracting = false;
+            //            }
 
-                    }
-                }
-                if (keys == Keys.Down || keys == Keys.S)
-                {
-                    if (currPlayer.YPos + 1 < pbSizeY / tileSize)
-                    {
-                        if (gameMap.Tiles[currPlayer.XPos, currPlayer.YPos + 1].IsEnterable)
-                        {
-                            currPlayer.YPos++;
-                            currPlayerMovePwr--;
-                            isInteracting = false;
-                        }
+            //        }
+            //    }
+            //    if (keys == Keys.Down || keys == Keys.S)
+            //    {
+            //        if (currPlayer.YPos + 1 < pbSizeY / tileSize)
+            //        {
+            //            if (gameMap.Tiles[currPlayer.XPos, currPlayer.YPos + 1].IsEnterable)
+            //            {
+            //                currPlayer.YPos++;
+            //                currPlayerMovePwr--;
+            //                isInteracting = false;
+            //            }
 
-                    }
-                }
-                if (keys == Keys.Left || keys == Keys.A)
-                {
-                    if (currPlayer.XPos - 1 >= 0)
-                    {
-                        if (gameMap.Tiles[currPlayer.XPos - 1, currPlayer.YPos].IsEnterable)
-                        {
-                            currPlayer.XPos--;
-                            currPlayerMovePwr--;
-                            isInteracting = false;
-                        }
+            //        }
+            //    }
+            //    if (keys == Keys.Left || keys == Keys.A)
+            //    {
+            //        if (currPlayer.XPos - 1 >= 0)
+            //        {
+            //            if (gameMap.Tiles[currPlayer.XPos - 1, currPlayer.YPos].IsEnterable)
+            //            {
+            //                currPlayer.XPos--;
+            //                currPlayerMovePwr--;
+            //                isInteracting = false;
+            //            }
 
-                    }
-                }
-                gameMap.Tiles[currPlayer.XPos, currPlayer.YPos].EnterTile(currPlayer);
-            }
+            //        }
+            //    }
+            //    gameMap.Tiles[currPlayer.XPos, currPlayer.YPos].EnterTile(currPlayer);
+            //}
             /*            /*
              *            
                ^^ WIRD NOCH ENTFERNT
@@ -145,6 +161,7 @@ namespace ConcenReact
                 if (!inAction())
                 {
                     inInventory = true;
+
                 }
                 else
                     inInventory = false;
@@ -169,8 +186,12 @@ namespace ConcenReact
             //Interagieren
             if (keys == Keys.Enter)
             {
+                if (inInventory)
+                {
+                    invenPopUp.KeyHandler(keys);
+                }
                 //Abfrage ob der Nutzer bereits in einer Aktion ist
-                if (!inAction())
+                else if (!inAction())
                 {
                     //Temp. Tile-Verweis zu weiteren Bearbeitung
                     Tile eventTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];

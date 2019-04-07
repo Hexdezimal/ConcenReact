@@ -62,7 +62,7 @@ namespace ConcenReact
                 {
                     rarity = 0;
                 }
-                else if (combScore < 70) //rare
+                else if (combScore < 79) //rare
                 {
                     rarity = 1;
                 }
@@ -96,7 +96,7 @@ namespace ConcenReact
                 name = assetHandler.Assets.WeaponNames[(int)ItemWeapons.Eisenschwert];
                 rarity = 0;
                 attackModifier = 0.0;
-                scoreModifier = 0;
+                scoreModifier = 0.0;
                 
 
             }

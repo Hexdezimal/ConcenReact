@@ -65,10 +65,7 @@ namespace ConcenReact
             //Spielerzuweisung
             player1 = p1;
             Player2 = p2;
-            
-            //Player1 zum Start
-            currPlayer = player1;
-            currPlayerMovePwr = player1.MovePower;
+
 
             //Status-Variablen
             inBattle = false;
@@ -99,9 +96,11 @@ namespace ConcenReact
             InitializeRarityPens();
             CheckPlayerOnTile();
 
-            //Asset-Handler initialisieren
-         
-            
+
+            //Player zum Start
+            gesamtGraphics = Graphics.FromImage(gesamt);
+            SetupStartingPlayer(player1);
+
         }
         private void InitializeRarityPens()
         {
@@ -183,7 +182,7 @@ namespace ConcenReact
         }
         public void DrawGame()
         {
-            gesamtGraphics = Graphics.FromImage(gesamt);
+            //gesamtGraphics = Graphics.FromImage(gesamt);
             if(!inOptions && !inBattle)
             {
                 //Hintergrund zeichnen
@@ -256,12 +255,20 @@ namespace ConcenReact
             if(inInventory)
             {
                 //Festlegene des Inventar-Pop-Ups des Spielers, welcher am Zug ist
-                invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush,iconBackgroundBrush,rarityPens, pbSizeX, pbSizeY, gesamtGraphics,debugForm);
+                //
                 //Anzeigen des Pop-Ups
+                if(currPlayer != invenPopUp.P)
+                    invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush, iconBackgroundBrush, rarityPens, pbSizeX, pbSizeY, gesamtGraphics, debugForm);
                 invenPopUp.DrawPopup();
             }
 
-            gesamtGraphics.Dispose();
+            //gesamtGraphics.Dispose();
+        }
+        public void SetupStartingPlayer(Player p)
+        {
+            currPlayer = player1;
+            currPlayerMovePwr = player1.MovePower;
+            invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush, iconBackgroundBrush, rarityPens, pbSizeX, pbSizeY, gesamtGraphics, debugForm);
         }
         private String GetSubMenuString(Tile tempTile)
         {

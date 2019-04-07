@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ConcenReact
 {
@@ -59,6 +60,11 @@ namespace ConcenReact
             DrawIconBorder();
             Context.DrawImage(itemBmp, PopupSizeX/2, PopupSizeY/2, ItemBitmapSize, ItemBitmapSize);
             Context.DrawString(ItemBitmapSize.ToString(), SystemFonts.CaptionFont, Brushes.Black, 100, 100);
+        }
+
+        public override void KeyHandler(Keys key)
+        {
+            DebugForm.WriteLine(key.ToString());
         }
     }
 }

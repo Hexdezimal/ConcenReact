@@ -33,35 +33,35 @@ namespace ConcenReact
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = false;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_0;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_0];
                 randTile.tileName = "Plain_0";
             }
             else if(rand<500)
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = false;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_1;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_1];
                 randTile.tileName = "Plain_1";
             }
             else if(rand<750)
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = false;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_2;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_2];
                 randTile.tileName = "Plain_2";
             }
             else if(rand<965)
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = false;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_3;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_3];
                 randTile.tileName = "Plain_3";
             }
             else if(rand<985)
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = true;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_House_0;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_House_0];
                 randTile.tileName = "Plain_House_0";
 
                 //randTile.interaction = new GetItemInteraction(Weapon.GetRandomWeapon(assetHandler),"Dorfbesuch","Willkommen im Dummy-Dorf, hier ist ein Item-Test!");
@@ -72,21 +72,21 @@ namespace ConcenReact
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = true;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_House_1;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_House_1];
                 randTile.tileName = "Plain_House_1";
             }
             else if(rand<1000)
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = false;
-                randTile.tileBitmap = Properties.Resources.Tile_Plain_Castle_0;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Plain_Castle_0];
                 randTile.tileName = "Plain_Castle_0";
             }
             else
             {
                 randTile.isEnterable = true;
                 randTile.isInteractable = true;
-                randTile.tileBitmap = Properties.Resources.Tile_Dummy_0;
+                randTile.tileBitmap = assetHandler.Assets.TileIcons[(int)Tiles.Dummy];
                 randTile.tileName = "DUMMY";
             }
 

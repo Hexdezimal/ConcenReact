@@ -51,8 +51,8 @@ namespace ConcenReact
             PopupSizeY = WindowSizeY - paddingY;
 
             //Fonts
-            headerFont = new Font("Arial", (float)(popupSizeY*0.05),FontStyle.Underline);
-            textFont = new Font("Arial",(float)(popupSizeY*0.03));
+            headerFont = new Font("Arial", (float)(GetMenuRectangleF().Width * 0.05),FontStyle.Underline);
+            textFont = new Font("Arial", (float)(GetMenuRectangleF().Width* 0.03));
             HeaderPositionY = (float)(PopupSizeY * 0.15);
             debugForm = df;
 
@@ -98,10 +98,13 @@ namespace ConcenReact
         {
             return PopupSizeX - (s.Length * HeaderFont.Size) / 4;
         }
-        public void DrawSeperatorLine(Pen p, float y)
+        public void DrawHorizontalSeperatorLine(Pen p, float y)
         {
             Context.DrawLine(p, GetMenuRectangleF().X, y, GetMenuRectangleF().Right, y);
-            
+        }
+        public void DrawVerticalSeperatorLine(Pen p, float x)
+        {
+            Context.DrawLine(p, x, GetMenuRectangleF().Top, x, GetMenuRectangleF().Bottom);
         }
 
         /*
@@ -113,7 +116,7 @@ namespace ConcenReact
         public abstract void SetBitmapAndTileSize(Bitmap bmp);
 
 
-        //Properties
+        //.
         public Graphics Context { get => context; set => context = value; }
         public int WindowSizeX { get => windowSizeX; set => windowSizeX = value; }
         public int WindowSizeY { get => windowSizeY; set => windowSizeY = value; }

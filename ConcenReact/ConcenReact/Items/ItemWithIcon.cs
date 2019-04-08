@@ -28,6 +28,15 @@ namespace ConcenReact
         {
 
         }
+        public override string GetDataAsString()
+        {
+            string data;
+
+            data = Prefix + Name+"\n"; //Name
+            data += "Rarity: " + Rarity+"\n";
+
+            return data;
+        }
 
         internal AssetHandler AssetHandler { get => assetHandler; set => assetHandler = value; }
     }

@@ -14,15 +14,21 @@ namespace ConcenReact
         int yPos, xPadding;
         float xPosItemBitmap, yPosItemBitmap;
 
-        private int currentSelectedItem;
-
+        //Inventar-Steuerung / Abfrage für Detail-Box
+        private int currentSelectedItemIndex;
+        private int lastSelectedItemIndex;
+        private bool itemSelected;
+        private int detailBoxWidth, detailBoxHeight;
+        private Item currentSelectedItem;
 
         public InventoryPopupMenu(Player p,Brush mB, Brush iconBg,List<Pen> rarityPens, int wX, int wY, Graphics g, DebugForm df) : base(mB,iconBg,rarityPens, wX, wY,g,df)
         {
             this.p = p;
             IconBackgroundBrush = iconBg;
 
-            currentSelectedItem = 0;
+            //Auswahl für Details etc
+            currentSelectedItemIndex = 0;
+            itemSelected = false;
             
         }
 
@@ -103,7 +109,7 @@ namespace ConcenReact
 
             yPos++;
 
-            DrawSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), yPosItemBitmap-ItemBitmapSize*0.75f);
+            DrawHorizontalSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), yPosItemBitmap-ItemBitmapSize*0.75f);
 
             //Ausgerüstete Armor inklusive Equip-Zeichen zeichnen
             DrawItem(tempArmor);
@@ -113,7 +119,7 @@ namespace ConcenReact
             yPos++;
 
             
-            DrawSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), yPosItemBitmap + ItemBitmapSize * 1.5f);
+            DrawHorizontalSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), yPosItemBitmap + ItemBitmapSize * 1.5f);
 
             yPos++;
             for(int i=0;i<P.InventorySpace;i++)
@@ -136,26 +142,40 @@ namespace ConcenReact
                 yPos++;
             }
 
+
+            //Zeichnen der Detail-Box
+            if (itemSelected)
+            {
+                DrawItemDetailBox();
+                DrawVerticalSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), GetMenuRectangleF().Right-1);
+                DrawCurrentItemName();
+            }
         }
 
         public override void KeyHandler(Keys key)
         {
             if(key==Keys.Up || key == Keys.W)
             {
-                if(currentSelectedItem-1>=0)
+                if(currentSelectedItemIndex-1>=0)
                 {
-                    currentSelectedItem--;
+                    currentSelectedItemIndex--;
                     if (DebugForm != null)
                         DebugForm.WriteLine("Up: " + currentSelectedItem);
+
+                    if (currentSelectedItemIndex != lastSelectedItemIndex)
+                        itemSelected = false;
                 }
             }
             if(key==Keys.Down || key == Keys.S)
             {
-                if(currentSelectedItem+1<P.InventorySpace+2)
+                if(currentSelectedItemIndex+1<P.InventorySpace+2)
                 {
-                    currentSelectedItem++;
+                    currentSelectedItemIndex++;
                     if (DebugForm != null)
                         DebugForm.WriteLine("Down: " + currentSelectedItem);
+
+                    if (currentSelectedItemIndex != lastSelectedItemIndex)
+                        itemSelected = false;
                 }
             }
             if(key==Keys.Left || key == Keys.A)
@@ -168,29 +188,41 @@ namespace ConcenReact
             }
             if(key==Keys.Enter)
             {
-                if(currentSelectedItem<p.EquipmentCount)
+                if(currentSelectedItemIndex<p.EquipmentCount)
                 {
                     //Abfrage auf Ausrüstungs-Slots
-                    if (currentSelectedItem == 0 && p.Weapon!=null )//Waffe
+                    if (currentSelectedItemIndex == 0 && p.Weapon!=null )//Waffe
                     {
                         if (DebugForm != null)
                             DebugForm.WriteLine("Waffe gefunden!");
+
+                        currentSelectedItem = p.Weapon;
+                        ChangeItemSelectedState();
+                        lastSelectedItemIndex = currentSelectedItemIndex;
                     }
-                    else if (currentSelectedItem == 1 && p.Armor!=null)//Rüstung
+                    else if (currentSelectedItemIndex == 1 && p.Armor!=null)//Rüstung
                     {
                         if (DebugForm != null)
                             DebugForm.WriteLine("Rüstung gefunden!");
+
+                        currentSelectedItem = p.Armor;
+                        ChangeItemSelectedState();
+                        lastSelectedItemIndex = currentSelectedItemIndex;
                     }
                 }
                 else
                 {
                     //Abfrage auf Inventar-Slots
-                    if(currentSelectedItem-p.EquipmentCount<p.Items.Count)
+                    if(currentSelectedItemIndex-p.EquipmentCount<p.Items.Count)
                     {
-                        if(p.Items[currentSelectedItem-p.EquipmentCount] != null )
+                        if(p.Items[currentSelectedItemIndex-p.EquipmentCount] != null )
                         {
                             if (DebugForm != null)
                                 DebugForm.WriteLine("Item gefunden!");
+
+                            currentSelectedItem = p.Items[currentSelectedItemIndex - p.EquipmentCount];
+                            ChangeItemSelectedState();
+                            lastSelectedItemIndex = currentSelectedItemIndex;
                         }
                     }
 
@@ -198,15 +230,39 @@ namespace ConcenReact
                 }
             }
         }
+        
+        private void DrawCurrentItemName()
+        {
+            Context.DrawString(currentSelectedItem.GetDataAsString()+"\n"+currentSelectedItem.Description, TextFont, Brushes.White, GetMenuRectangleF().Right, GetMenuRectangleF().Top + HeaderFont.Size / 2);
+        }
+        private void ChangeItemSelectedState()
+        {
+            if (itemSelected)
+            {
+                itemSelected = false;
+                currentSelectedItem = null;
+            }
+            else itemSelected = true;
+        }
+        private void SetItemDetailBoxSize()
+        {
+            detailBoxHeight = (int)GetMenuRectangleF().Height/ 2;
+            detailBoxWidth = (int)GetMenuRectangleF().Width / 2;
+        }
+        private void DrawItemDetailBox()
+        {
+            SetItemDetailBoxSize();
+            Context.FillRectangle(MenuBrush, new RectangleF(GetMenuRectangleF().Right, GetMenuRectangleF().Top, detailBoxWidth, detailBoxHeight));
+        }
         private void DrawCurrentSelectedItemHighlight()
         {
             //Abfrage, ob Seperator übersprungen werden muss
             int addForBorder = 1;
-            if (currentSelectedItem > 1)
+            if (currentSelectedItemIndex > 1)
                 addForBorder = 2;
 
 
-            Context.FillRectangle(HighlightBrush, new RectangleF(GetMenuRectangle().Left, (currentSelectedItem+addForBorder) * (2.5f * TileSize) + (WindowSizeY / ItemBitmapSize * 2) + HeaderPositionY, PopupSizeX, ItemBitmapSize));
+            Context.FillRectangle(HighlightBrush, new RectangleF(GetMenuRectangle().Left, (currentSelectedItemIndex+addForBorder) * (2.5f * TileSize) + (WindowSizeY / ItemBitmapSize * 2) + HeaderPositionY, PopupSizeX, ItemBitmapSize));
         }
         internal Player P { get => p;  }
 

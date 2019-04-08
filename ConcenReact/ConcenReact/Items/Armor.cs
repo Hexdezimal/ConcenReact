@@ -21,7 +21,14 @@ namespace ConcenReact
         {
             this.defenseModifier = defenseModifier;
         }
+        public override string GetDataAsString()
+        {
+            string data;
+            data = base.GetDataAsString();
 
+            data += "Defense Mod.: " + defenseModifier  + "%\n";
+            return data;
+        }
         //Standard-Konstruktor für Leeres Item
         public Armor():base()
         {

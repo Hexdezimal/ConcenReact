@@ -14,6 +14,7 @@ namespace ConcenReact
         private int weaponNamesCount;
         
         private int tilesCount;
+        private Random rand;
         public AssetHandler()
         {
             Assets = new InitializeAssets();
@@ -21,6 +22,7 @@ namespace ConcenReact
             weaponIconsCount = assets.WeaponIcons.Count;
             weaponNamesCount = assets.WeaponNames.Count;
             tilesCount = assets.TileIcons.Count;
+            rand = new Random();
         }
 
 
@@ -28,6 +30,7 @@ namespace ConcenReact
         public int WeaponIconsCount { get => weaponIconsCount; set => weaponIconsCount = value; }
         public int WeaponNamesCount { get => weaponNamesCount; set => weaponNamesCount = value; }
         public int TilesCount { get => tilesCount; set => tilesCount = value; }
+        public Random Rand { get => rand; set => rand = value; }
         internal InitializeAssets Assets { get => assets; set => assets = value; }
     }
     public enum ItemWeapons

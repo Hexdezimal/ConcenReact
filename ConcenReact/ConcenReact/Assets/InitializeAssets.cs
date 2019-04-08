@@ -74,7 +74,7 @@ namespace ConcenReact
             //epic
             rarityPrefix[3].Add("Gehärtetes ");
             //Legendary
-            rarityPrefix[4].Add("Markelloses ");
+            rarityPrefix[4].Add("Makelloses ");
             rarityPrefix[4].Add("Strahlendes ");
             //Unique
             rarityPrefix[5].Add("Verfluchtes ");

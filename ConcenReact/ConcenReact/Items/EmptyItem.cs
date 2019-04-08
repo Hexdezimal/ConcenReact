@@ -12,5 +12,9 @@ namespace ConcenReact
         {
 
         }
+        public override string GetDataAsString()
+        {
+            return "";
+        }
     }
 }

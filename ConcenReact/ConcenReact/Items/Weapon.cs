@@ -28,7 +28,9 @@ namespace ConcenReact
         public static Weapon GetRandomWeapon(AssetHandler assetHandler)
         {
             //Zufallsgenerator initialisieren
-            Random r = new Random((int)DateTime.Now.Ticks);
+
+            Random r = new Random(assetHandler.Rand.Next());
+
             int rand;
 
             //temporäre Merker
@@ -49,10 +51,12 @@ namespace ConcenReact
                 name = assetHandler.Assets.WeaponNames[rand];
 
                 rand = r.Next(0, 50);
-                attackModifier = rand / 10;
+                attackModifier = (double)rand / 10;
+
                 int combScore= rand;
                 rand = r.Next(0, 50);
-                scoreModifier = rand/10;
+                scoreModifier = (double)rand /10;
+
                 combScore += rand;
 
                 //Kombinierter Score für Abfrage nach Rarity
@@ -106,6 +110,16 @@ namespace ConcenReact
             
             return w;
             
+        }
+        public override string GetDataAsString()
+        {
+            string data;
+            data =  base.GetDataAsString();
+
+            data += "Attack Mod.: " + attackModifier + "%"+"\n";
+            data += "Score Mod.: " + scoreModifier  + "%" + "\n";
+
+            return data;
         }
 
         //Standard-Konstruktor für leeres Item

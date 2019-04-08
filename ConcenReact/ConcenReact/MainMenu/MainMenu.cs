@@ -51,7 +51,8 @@ namespace ConcenReact
             //DEBUG
             AddEntry(new StartGameMenuEntry(debugForm,"Start"));
             AddEntry(new CloseMenuEntry(debugForm,"Beenden"));
-            AddEntry(new VisualMenuEntry(debugForm,pbWidth, pbHeight, menuBrush, "VisualTest", "TITELZEILE"));
+
+            AddEntry(new VisualMenuEntry(null,debugForm,pbWidth, pbHeight, menuBrush, "VisualTest", "TITELZEILE"));
 
             CreateBackground();
         }
@@ -166,7 +167,7 @@ namespace ConcenReact
             {
                 if(InVisualEntry)
                 {
-                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key);
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key, ((VisualMenuEntry)entries[currentMenuEntry]));
                 }
                 else
                 {
@@ -179,7 +180,7 @@ namespace ConcenReact
             {
                 if(InVisualEntry)
                 {
-                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key);
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key, ((VisualMenuEntry)entries[currentMenuEntry]));
                 }
                 else
                 {

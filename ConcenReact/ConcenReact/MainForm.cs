@@ -144,7 +144,7 @@ namespace ConcenReact
                 {
                     if(mainMenu.InVisualEntry)
                     {
-                        ((VisualMenuEntry)lastClickedEntry).KeyHandler(e.KeyCode);
+                        ((VisualMenuEntry)lastClickedEntry).KeyHandler(e.KeyCode, ((VisualMenuEntry)lastClickedEntry));
                     }
                     else
                         mainMenu.KeyHandler(e.KeyCode);

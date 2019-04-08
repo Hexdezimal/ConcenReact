@@ -14,6 +14,7 @@ namespace ConcenReact
         private Bitmap itemBitmap;
         private string name;
         private string prefix;
+        private string description;
         private int rarity;
 
 
@@ -25,6 +26,7 @@ namespace ConcenReact
             this.Name = name;
             this.rarity = rarity;
             this.prefix = prefix;
+            this.description = "Flavor-Text_01";
         }
         public Item()
         {
@@ -34,13 +36,16 @@ namespace ConcenReact
             this.Name = "Nichts";
             this.rarity = 0;
             this.prefix = "";
+            this.description = "Flavor-Text_01";
         }
-
+        public abstract string GetDataAsString();
+        
         public string Name { get => name; set => name = value; }
         public Bitmap ItemBitmap { get => itemBitmap; set => itemBitmap = value; }
         public bool IsUsable { get => isUsable; set => isUsable = value; }
         public bool IsEquipable { get => isEquipable; set => isEquipable = value; }
         public int Rarity { get => rarity; set => rarity = value; }
         public string Prefix { get => prefix; set => prefix = value; }
+        public string Description { get => description; set => description = value; }
     }
 }

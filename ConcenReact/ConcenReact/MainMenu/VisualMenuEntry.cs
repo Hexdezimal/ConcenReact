@@ -17,42 +17,45 @@ namespace ConcenReact
         private Brush menuBrush;
         private bool isVisible;
 
-        public VisualMenuEntry(DebugForm debugForm, int windowSizeX, int windowSizeY, Brush menuBrush, string name, string header) : base(debugForm, name)
+        private AssetHandler assetHandler;
+
+        public VisualMenuEntry(AssetHandler assetHandler, DebugForm debugForm, int windowSizeX, int windowSizeY, Brush menuBrush, string name, string header) : base(debugForm, name)
         {
             this.Header = header;
-            this.menuBrush = menuBrush;
+            this.MenuBrush = menuBrush;
             background = new Bitmap(windowSizeX, windowSizeY);
-            gesamt = new Bitmap(background);
+            Gesamt = new Bitmap(background);
             this.DebugForm = debugForm;
+            this.assetHandler = assetHandler;
         }
         public void DrawBackground()
         {
             //Zeichnen des Hintergrunds
-            gesamtGraphic = Graphics.FromImage(background);
-            gesamtGraphic.FillRectangle(Brushes.Gray, new Rectangle(0, 0, gesamt.Width, gesamt.Height));    //Hintergrund
-            gesamtGraphic.FillRectangle(menuBrush, new Rectangle(0, 0, gesamt.Width, gesamt.Height));       //menuBrush über Hintergrund gelegt
-            gesamtGraphic.Dispose();
+            GesamtGraphic = Graphics.FromImage(background);
+            GesamtGraphic.FillRectangle(Brushes.Gray, new Rectangle(0, 0, Gesamt.Width, Gesamt.Height));    //Hintergrund
+            GesamtGraphic.FillRectangle(MenuBrush, new Rectangle(0, 0, Gesamt.Width, Gesamt.Height));       //menuBrush über Hintergrund gelegt
+            GesamtGraphic.Dispose();
             
         }
-        public virtual void KeyHandler(Keys key)
+        public virtual void KeyHandler(Keys key, VisualMenuEntry sender)
         {
-            if (DebugForm != null)
-                DebugForm.WriteLine(key.ToString());
+            if (DebugForm != null && sender!=null)
+                DebugForm.WriteLine(sender.ToString()+" : "+key.ToString());
         }
         public virtual void DrawVisualMenuEntry(PictureBox pb)
         {
             DrawBackground();
-            gesamtGraphic = Graphics.FromImage(gesamt);
-            gesamtGraphic.DrawImage(background, 0, 0, background.Width, background.Height);
+            GesamtGraphic = Graphics.FromImage(Gesamt);
+            GesamtGraphic.DrawImage(background, 0, 0, background.Width, background.Height);
 
             
-            pb.Image = gesamt;
-            gesamtGraphic.Dispose();
+            pb.Image = Gesamt;
+            GesamtGraphic.Dispose();
         }
         
         public virtual Bitmap GetGesamtBitmap()
         {
-            return gesamt;
+            return Gesamt;
         }
 
         public override void Press()
@@ -67,5 +70,9 @@ namespace ConcenReact
 
         public string Header { get => header; set => header = value; }
         public bool IsVisible { get => isVisible; set => isVisible = value; }
+        public Graphics GesamtGraphic { get => gesamtGraphic; set => gesamtGraphic = value; }
+        public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
+        public Bitmap Gesamt { get => gesamt; set => gesamt = value; }
+        internal AssetHandler AssetHandler { get => assetHandler; set => assetHandler = value; }
     }
 }

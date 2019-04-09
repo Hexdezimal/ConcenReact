@@ -14,6 +14,7 @@ namespace ConcenReact
         private int weaponNamesCount;
         
         private int tilesCount;
+        //Für verbesserten Zufallsgenerator
         private Random rand;
         public AssetHandler()
         {
@@ -99,5 +100,11 @@ namespace ConcenReact
     {
         Verfluchtes,
         Einzigartiges,
+    }
+    public enum CharacterIcons
+    {
+        Myrmidone,
+        Lord_Roy,
+        Lord_Lyn,
     }
 }

@@ -23,10 +23,11 @@ namespace ConcenReact
         private int padding;
 
         private bool inVisualEntry;
+        private bool InVisualProfileEditor;
 
         private List<MainMenuEntry> entries;
 
-        public MainMenu(DebugForm debugForm, int pbWidth, int pbHeight)
+        public MainMenu(AssetHandler assetHandler, DebugForm debugForm, int pbWidth, int pbHeight)
         {
 
             background = new Bitmap(pbWidth, pbHeight);
@@ -43,18 +44,36 @@ namespace ConcenReact
 
             //Aktion
             InVisualEntry = false;
+            InVisualProfileEditor1 = false;
 
             //Brushes für Menu-Einträge und wenn eins markiert ist
-            menuBrush = new SolidBrush(Color.FromArgb(100,Color.Blue));
+            MenuBrush = new SolidBrush(Color.FromArgb(100,Color.Blue));
             highlightBrush = new SolidBrush(Color.FromArgb(100, Color.LightBlue));
 
             //DEBUG
             AddEntry(new StartGameMenuEntry(debugForm,"Start"));
             AddEntry(new CloseMenuEntry(debugForm,"Beenden"));
 
-            AddEntry(new VisualMenuEntry(null,debugForm,pbWidth, pbHeight, menuBrush, "VisualTest", "TITELZEILE"));
 
             CreateBackground();
+        }
+        public Player GetCreatedPlayer()
+        {
+            Player p = new Player("ERROR", false);
+
+
+            foreach(MainMenuEntry vp in entries)
+            {
+                if(vp.GetType()==typeof(VisualProfileEditorEntry))
+                {
+                    p = ((VisualProfileEditorEntry)vp).CreatedPlayer;
+
+                }
+            }
+
+            
+
+            return p;
         }
         public void ResetPressed()
         {
@@ -90,18 +109,18 @@ namespace ConcenReact
             }
             return temp;
         }
-        public bool VisualMenuEntryPressed()
+        public bool VisualProfileEditorEntryPressed()
         {
             bool temp = false;
             
             foreach(MainMenuEntry e in entries)
             {
-                if(e.GetType()==typeof(VisualMenuEntry))
+                if(e.GetType()==typeof(VisualProfileEditorEntry))
                 {
                     if (e.Pressed)
                     {
                         temp = true;
-                        InVisualEntry = true;
+                        InVisualProfileEditor1 = true;
                     }
                 }
             }
@@ -140,7 +159,7 @@ namespace ConcenReact
         {
             for(int i=0;i<Entries.Count;i++)
             {
-                gesamtGraphics.FillRectangle(menuBrush, new Rectangle(background.Width / 4, (background.Height / 2) + (i* entryHeight)+entryHeight, entryWidth, entryHeight));
+                gesamtGraphics.FillRectangle(MenuBrush, new Rectangle(background.Width / 4, (background.Height / 2) + (i* entryHeight)+entryHeight, entryWidth, entryHeight));
                 gesamtGraphics.DrawString(Entries[i].Name, new Font("Arial", 35, FontStyle.Bold), Brushes.White, new PointF(background.Width / 4, (background.Height / 2) + (i * entryHeight)+entryHeight));
             }
         }
@@ -165,13 +184,13 @@ namespace ConcenReact
         {
             if(key == Keys.Down)
             {
-                if(InVisualEntry)
+                if(InVisualProfileEditor1) //InVisualEntry
                 {
                     ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key, ((VisualMenuEntry)entries[currentMenuEntry]));
                 }
                 else
                 {
-                    if (currentMenuEntry + 1 < Entries.Count && !InVisualEntry)
+                    if (currentMenuEntry + 1 < Entries.Count && !InVisualProfileEditor1)
                         currentMenuEntry++;
 
                 }
@@ -184,9 +203,9 @@ namespace ConcenReact
                 }
                 else
                 {
-                    if (currentMenuEntry - 1 >= 0 && !InVisualEntry)
+                    if (currentMenuEntry - 1 >= 0 && !InVisualProfileEditor1)
                         currentMenuEntry--;
-
+                    
                 }
             }
             if(key==Keys.Enter)
@@ -211,5 +230,7 @@ namespace ConcenReact
         public int Padding { get => padding; set => padding = value; }
         internal List<MainMenuEntry> Entries { get => entries; set => entries = value; }
         public bool InVisualEntry { get => inVisualEntry; set => inVisualEntry = value; }
+        public bool InVisualProfileEditor1 { get => InVisualProfileEditor; set => InVisualProfileEditor = value; }
+        public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
     }
 }

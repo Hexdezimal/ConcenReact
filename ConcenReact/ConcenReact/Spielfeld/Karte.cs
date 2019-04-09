@@ -27,7 +27,7 @@ namespace ConcenReact
             {
                 for(int x=0;x<xTiles;x++)
                 {
-                    tiles[x, y] = Tile.GetRandomTile(assetHandler, debugForm,rSalt.Next());
+                    tiles[x, y] = Tile.GetRandomTile(assetHandler, debugForm,rSalt.Next()+assetHandler.Rand.Next());
                 }
             }
 

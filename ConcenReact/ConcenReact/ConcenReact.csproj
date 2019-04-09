@@ -68,6 +68,9 @@
     <Compile Include="Game\Game_ControlHandling.cs" />
     <Compile Include="Assets\InitializeAssets.cs" />
     <Compile Include="Items\ItemWithIcon.cs" />
+    <Compile Include="MainMenu\Option\VisualMenuEntryCharacterBitmapOption.cs" />
+    <Compile Include="MainMenu\Option\VisualMenuEntryEnterNameOption.cs" />
+    <Compile Include="MainMenu\Option\VisualMenuEntryOption.cs" />
     <Compile Include="MainMenu\VisualMenuEntry.cs" />
     <Compile Include="MainMenu\CloseMenuEntry.cs" />
     <Compile Include="MainMenu\MainMenuEntry.cs" />
@@ -177,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Character_2_LordLyn.png" />
+    <None Include="Resources\Character_1_Lord.png" />
+    <None Include="Resources\Avatar_1_Lord.png" />
     <None Include="Resources\Item_Sword_Katana.png" />
     <None Include="Resources\Item_Sword_Exodus.png" />
     <None Include="Resources\Item_Sword_Steel.png" />

@@ -38,6 +38,9 @@ namespace ConcenReact
         private bool debug;
         public ConcenReact()
         {
+            //Initialize Assets
+            assetHandler = new AssetHandler();
+
             //Initialize Block
             InitializeComponent();
 
@@ -49,7 +52,7 @@ namespace ConcenReact
             gameInitialized = false; //Spiellogik erst nach Menü initialisieren
             mainMenuInitialized = false;
 
-            assetHandler = new AssetHandler();
+
 
             timerGameTick.Start();
 
@@ -100,9 +103,10 @@ namespace ConcenReact
                     this.Close();
                     lastClickedEntry = mainMenu.Entries[mainMenu.CurrentMenuEntry];
                 }
-                if(mainMenu.VisualMenuEntryPressed())
+                if(mainMenu.VisualProfileEditorEntryPressed())
                 {
-                    ((VisualMenuEntry)mainMenu.Entries[mainMenu.CurrentMenuEntry]).DrawVisualMenuEntry(pbMainGame);
+                    ((VisualProfileEditorEntry)mainMenu.Entries[mainMenu.CurrentMenuEntry]).DrawVisualMenuEntry();
+                    pbMainGame.Image = ((VisualProfileEditorEntry)mainMenu.Entries[mainMenu.CurrentMenuEntry]).Gesamt;
 
                     lastClickedEntry = mainMenu.Entries[mainMenu.CurrentMenuEntry];
 
@@ -118,17 +122,20 @@ namespace ConcenReact
             gameInitialized = false; //Spiellogik erst nach Menü initialisieren
 
             //Reset MainMenu Settings
-            mainMenuInitialized = false;
-            
-            if(mainMenu!=null)
+
+
+            //mainMenuInitialized = false;
+            InitializeFormMainMenu();
+
+            if (mainMenu!=null)
             {
-                mainMenu.InVisualEntry = false;
+                mainMenu.InVisualProfileEditor1 = false;
                 mainMenu.ResetPressed();
             }
             
-            if (lastClickedEntry.GetType()==typeof(VisualMenuEntry))
+            if (lastClickedEntry.GetType()==typeof(VisualProfileEditorEntry))
             {
-                ((VisualMenuEntry)lastClickedEntry).Close();    //Visuelles Menü schließen
+                ((VisualProfileEditorEntry)lastClickedEntry).Close();    //Visuelles Menü schließen
             }
         }
         private void ConcenReact_KeyDown(object sender, KeyEventArgs e)
@@ -142,9 +149,9 @@ namespace ConcenReact
                 }
                 else
                 {
-                    if(mainMenu.InVisualEntry)
+                    if(mainMenu.InVisualProfileEditor1)
                     {
-                        ((VisualMenuEntry)lastClickedEntry).KeyHandler(e.KeyCode, ((VisualMenuEntry)lastClickedEntry));
+                        ((VisualProfileEditorEntry)lastClickedEntry).KeyHandler(e.KeyCode, ((VisualProfileEditorEntry)lastClickedEntry));
                     }
                     else
                         mainMenu.KeyHandler(e.KeyCode);
@@ -179,17 +186,18 @@ namespace ConcenReact
         {
             InitializeFormMainMenu();
             InitializeDebugMainMenu();
+            mainMenu.AddEntry(new VisualProfileEditorEntry(assetHandler, debugForm, Size.Width, Size.Height, mainMenu.MenuBrush, "Profil", "Profil"));
             mainMenuInitialized = true;
 
         }
         private void InitializeDebugGame()
         {
-            mainGame = new Game(assetHandler, debugForm,debug,new Player("Player1",false), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
+            mainGame = new Game(assetHandler, debugForm,debug,mainMenu.GetCreatedPlayer(), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
 
         }
         private void InitializeDebugMainMenu()
         {
-            mainMenu = new MainMenu(debugForm,gamePbWidth, gamePbHeight);
+            mainMenu = new MainMenu(assetHandler, debugForm,gamePbWidth, gamePbHeight);
         }
         //Initialisieren der Form für das Hauptmenü
         private void InitializeFormMainMenu()

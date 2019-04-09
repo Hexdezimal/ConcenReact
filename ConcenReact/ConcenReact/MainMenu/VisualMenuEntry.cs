@@ -23,15 +23,15 @@ namespace ConcenReact
         {
             this.Header = header;
             this.MenuBrush = menuBrush;
-            background = new Bitmap(windowSizeX, windowSizeY);
-            Gesamt = new Bitmap(background);
+            Background = new Bitmap(windowSizeX, windowSizeY);
+            Gesamt = new Bitmap(Background);
             this.DebugForm = debugForm;
             this.assetHandler = assetHandler;
         }
         public void DrawBackground()
         {
             //Zeichnen des Hintergrunds
-            GesamtGraphic = Graphics.FromImage(background);
+            GesamtGraphic = Graphics.FromImage(Background);
             GesamtGraphic.FillRectangle(Brushes.Gray, new Rectangle(0, 0, Gesamt.Width, Gesamt.Height));    //Hintergrund
             GesamtGraphic.FillRectangle(MenuBrush, new Rectangle(0, 0, Gesamt.Width, Gesamt.Height));       //menuBrush über Hintergrund gelegt
             GesamtGraphic.Dispose();
@@ -42,14 +42,14 @@ namespace ConcenReact
             if (DebugForm != null && sender!=null)
                 DebugForm.WriteLine(sender.ToString()+" : "+key.ToString());
         }
-        public virtual void DrawVisualMenuEntry(PictureBox pb)
+        public virtual void DrawVisualMenuEntry()
         {
             DrawBackground();
             GesamtGraphic = Graphics.FromImage(Gesamt);
-            GesamtGraphic.DrawImage(background, 0, 0, background.Width, background.Height);
+            GesamtGraphic.DrawImage(Background, 0, 0, Background.Width, Background.Height);
 
             
-            pb.Image = Gesamt;
+
             GesamtGraphic.Dispose();
         }
         
@@ -74,5 +74,6 @@ namespace ConcenReact
         public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
         public Bitmap Gesamt { get => gesamt; set => gesamt = value; }
         internal AssetHandler AssetHandler { get => assetHandler; set => assetHandler = value; }
+        public Bitmap Background { get => background; set => background = value; }
     }
 }

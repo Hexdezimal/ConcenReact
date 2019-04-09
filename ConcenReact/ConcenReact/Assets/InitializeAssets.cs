@@ -10,13 +10,14 @@ namespace ConcenReact
 {
     class InitializeAssets
     {
-        List<Bitmap> tileIcons;
         
-        //Für Zufallsgenerator
+        //Listen
+        List<Bitmap> tileIcons;
         List<Bitmap> weaponIcons;
         List<string> weaponNames;
         List<string> uniqueWeaponNames;
         List<Bitmap> uniqueWeaponIcons;
+        List<Bitmap> characterBitmaps;
         //Rarity
         List<List<string>> rarityPrefix;
 
@@ -33,9 +34,9 @@ namespace ConcenReact
             uniqueWeaponNames = new List<string>();
             rarityPrefix = new List<List<string>>();
             uniqueWeaponIcons = new List<Bitmap>();
+            characterBitmaps = new List<Bitmap>();
 
-
-            prefabWeapons = new List<Weapon>();
+            PrefabWeapons = new List<Weapon>();
 
             Initialize();
         }
@@ -46,10 +47,17 @@ namespace ConcenReact
             AddWeaponNames();
             AddUniqueWeaponNames();
             AddRarityPrefixes();
+            AddCharacterBitmaps();
+        }
+        private void AddCharacterBitmaps()
+        {
+            characterBitmaps.Add(Properties.Resources.Character_0_Myrmim);
+            characterBitmaps.Add(Properties.Resources.Character_1_Lord);
+            characterBitmaps.Add(Properties.Resources.Character_2_LordLyn);
         }
         private void AddPrefabWeapons()
         {
-            prefabWeapons.Add(new Weapon(null, WeaponIcons[(int)ItemWeapons.Eisenschwert], false, true, WeaponNames[(int)ItemWeapons.Eisenschwert],"", 0.02, 0.03, 0));
+            PrefabWeapons.Add(new Weapon(null, WeaponIcons[(int)ItemWeapons.Eisenschwert], false, true, WeaponNames[(int)ItemWeapons.Eisenschwert],"", 0.02, 0.03, 0));
         }
         private void AddRarityPrefixes()
         {
@@ -131,5 +139,7 @@ namespace ConcenReact
         public List<string> UniqueWeaponNames { get => uniqueWeaponNames; set => uniqueWeaponNames = value; }
         public List<List<string>> RarityPrefix { get => rarityPrefix; set => rarityPrefix = value; }
         public List<Bitmap> UniqueWeaponIcons { get => uniqueWeaponIcons; set => uniqueWeaponIcons = value; }
+        public List<Bitmap> CharacterBitmaps { get => characterBitmaps; set => characterBitmaps = value; }
+        internal List<Weapon> PrefabWeapons { get => prefabWeapons; set => prefabWeapons = value; }
     }
 }

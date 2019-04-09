@@ -27,7 +27,7 @@ namespace ConcenReact
 
 
         //Debug-Konstruktor
-        public Player(string name,bool isEnemy):base(name,Properties.Resources.Character_0_Myrmim,Properties.Resources.Avatar_0_Myrmim)
+        public Player(string name,bool isEnemy,Bitmap charBitmap):base(name,charBitmap,Properties.Resources.Avatar_0_Myrmim)
         {
             scores = new List<int>();
             Items = new List<Item>();
@@ -58,6 +58,39 @@ namespace ConcenReact
 
             }
            
+        }
+        //Konstruktor ohne Bitmap-Angabe
+        public Player(string name, bool isEnemy) : base(name,Properties.Resources.Character_0_Myrmim, Properties.Resources.Avatar_0_Myrmim)
+        {
+            scores = new List<int>();
+            Items = new List<Item>();
+
+            indexHighscore = -1;
+            //Random GUID für Savegames -> TODO SAVEGAME
+            saveGUID = Guid.NewGuid();
+
+            //Ob Gegner -> Farbe ändern
+            this.IsEnemy = isEnemy;
+
+            XPos = 0;
+            YPos = 0;
+
+            //Stats
+            MovePower = 5;
+            InventorySpace = 2;
+            hpMax = 10;
+            hp = hpMax;
+            equipmentCount = 2;
+
+
+            if (isEnemy)
+            {
+                ChangeColorToEnemy();
+                XPos = 1;
+                YPos = 1;
+
+            }
+
         }
 
         private void ChangeColorToEnemy()

@@ -83,6 +83,26 @@ namespace ConcenReact.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Character_1_Lord {
+            get {
+                object obj = ResourceManager.GetObject("Character_1_Lord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Character_2_LordLyn {
+            get {
+                object obj = ResourceManager.GetObject("Character_2_LordLyn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Item_Sword_0_ManniKatt {
             get {
                 object obj = ResourceManager.GetObject("Item_Sword_0_ManniKatt", resourceCulture);

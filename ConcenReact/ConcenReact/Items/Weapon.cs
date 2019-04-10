@@ -106,14 +106,26 @@ namespace ConcenReact
             }
             rand = r.Next(0,assetHandler.Assets.RarityPrefix[rarity].Count);
 
-            Weapon w = new Weapon(null, icon, false, true, name,assetHandler.Assets.RarityPrefix[rarity][rand], attackModifier, scoreModifier, rarity);
+            Weapon w = new Weapon(assetHandler, icon, false, true, name,assetHandler.Assets.RarityPrefix[rarity][rand], attackModifier, scoreModifier, rarity);
             
             return w;
             
         }
+        public override int DrawDataString(Font textFont, Graphics g, int detailBoxWidth, int detailBoxHeight, int detailBoxX, int detailBoxY)
+        {
+            int entry = base.DrawDataString(textFont, g, detailBoxWidth, detailBoxHeight, detailBoxX,detailBoxY);     //detailBoxY (obere kante des fensters + entry (Anzahl der Zeile) * Die Höhe der Schriftart
+            g.DrawString("Attack Mod.: " + attackModifier + "%", textFont, Brushes.White, detailBoxX,detailBoxY+ entry * textFont.Height);
+            entry++;
+            g.DrawString("Score Mod.: " + scoreModifier + "%",textFont, Brushes.White, detailBoxX, detailBoxY + entry * textFont.Height);
+            entry++;
+            
+            return entry;
+
+        }
         public override string GetDataAsString()
         {
             string data;
+           
             data =  base.GetDataAsString();
 
             data += "Attack Mod.: " + attackModifier + "%"+"\n";

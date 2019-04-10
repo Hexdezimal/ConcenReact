@@ -39,6 +39,7 @@ namespace ConcenReact
             this.description = "Flavor-Text_01";
         }
         public abstract string GetDataAsString();
+        public abstract int DrawDataString(Font textFont,Graphics g,int detailBoxWidth, int detailBoxHeight, int detailBoxX, int detailBoxY);
         
         public string Name { get => name; set => name = value; }
         public Bitmap ItemBitmap { get => itemBitmap; set => itemBitmap = value; }

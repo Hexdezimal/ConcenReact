@@ -10,6 +10,7 @@ namespace ConcenReact
 {
     abstract class PopupMenu
     {
+        private AssetHandler assetHandler;
         
         int windowSizeX, windowSizeY;
         int popupSizeX, popupSizeY;
@@ -27,15 +28,18 @@ namespace ConcenReact
         Brush highlightBrush;
         Graphics context;
         Brush iconBackgroundBrush;
-        List<Pen> rarityPens;
+
         private DebugForm debugForm;
 
-        public PopupMenu(Brush mB, Brush iconBg,List<Pen> rarityPens, int wX, int wY, Graphics g, DebugForm df)
+        public PopupMenu(AssetHandler assetHandler, Brush mB, Brush iconBg, int wX, int wY, Graphics g, DebugForm df)
         {
+            //AssetHandler
+            this.assetHandler = assetHandler;
+
             //Brushes und Pens
             MenuBrush = mB;
             iconBackgroundBrush = iconBg;
-            this.RarityPens = rarityPens;
+
 
             //Fenstergröße
             WindowSizeX = wX;
@@ -129,9 +133,10 @@ namespace ConcenReact
         public Brush IconBackgroundBrush { get => iconBackgroundBrush; set => iconBackgroundBrush = value; }
         public float ItemBitmapSize { get => itemBitmapSize; set => itemBitmapSize = value; }
         public int TileSize { get => tileSize; set => tileSize = value; }
-        public List<Pen> RarityPens { get => rarityPens; set => rarityPens = value; }
+
         public DebugForm DebugForm { get => debugForm; set => debugForm = value; }
         public Brush HighlightBrush { get => highlightBrush; set => highlightBrush = value; }
         public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
+        internal AssetHandler AssetHandler { get => assetHandler; set => assetHandler = value; }
     }
 }

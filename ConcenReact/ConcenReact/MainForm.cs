@@ -137,6 +137,8 @@ namespace ConcenReact
             {
                 ((VisualProfileEditorEntry)lastClickedEntry).Close();    //Visuelles Menü schließen
             }
+
+
         }
         private void ConcenReact_KeyDown(object sender, KeyEventArgs e)
         {
@@ -151,12 +153,11 @@ namespace ConcenReact
                 {
                     if(mainMenu.InVisualProfileEditor1)
                     {
-                        ((VisualProfileEditorEntry)lastClickedEntry).KeyHandler(e.KeyCode, ((VisualProfileEditorEntry)lastClickedEntry));
+                        ((VisualProfileEditorEntry)lastClickedEntry).KeyHandler(e, ((VisualProfileEditorEntry)lastClickedEntry));
                     }
                     else
-                        mainMenu.KeyHandler(e.KeyCode);
+                        mainMenu.KeyHandler(e);
                 }
-
             }
             else
             {
@@ -173,8 +174,6 @@ namespace ConcenReact
 
             }
         }
-
-        
         private void StartGame()
         {
             InitializeForm();
@@ -192,6 +191,19 @@ namespace ConcenReact
         }
         private void InitializeDebugGame()
         {
+            //Wenn Spiel vorhanden war -> Bitmaps freigeben
+            if(mainGame!=null)
+                mainGame.DisposeBitmaps();
+
+            //Abfrage, ob Menü geöffnet wurde, ansonsten Default-WErter
+            if(mainMenu.GetXYTiles().Width>0 && mainMenu.GetXYTiles().Height>0)
+            {
+                gamePbWidth = mainMenu.GetXYTiles().Width * tileSize;
+                gamePbHeight = mainMenu.GetXYTiles().Height * tileSize;
+                RefreshFormLayout();
+
+            }
+            //Spiel-Objekt erstellen
             mainGame = new Game(assetHandler, debugForm,debug,mainMenu.GetCreatedPlayer(), new Player("Player2",true), tileSize, gamePbWidth, gamePbHeight);
 
         }
@@ -225,9 +237,27 @@ namespace ConcenReact
             gamePbHeight = yTiles*tileSize;
             this.Size = new Size(gamePbWidth+border*3, gamePbHeight+border*5);
 
-           
             pbMainGame.Location = new Point(border,border);
             
+        }
+        private void InitializeForm(int xTiles, int yTiles)
+        {
+            border = 15;
+            tileSize = 32;
+
+            gamePbWidth = xTiles * tileSize;
+            gamePbHeight = yTiles * tileSize;
+            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
+
+            pbMainGame.Location = new Point(border, border);
+        }
+        private void RefreshFormLayout()
+        {
+            border = 15;
+            tileSize = 32;
+
+            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
+            pbMainGame.Location = new Point(border, border);
         }
     }
 }

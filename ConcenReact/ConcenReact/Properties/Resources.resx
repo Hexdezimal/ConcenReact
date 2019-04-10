@@ -253,6 +253,31 @@
         /gzRCaTB1A/6B4jECIym4q/osWt5UIzhzacwLUBefQK2foZ37HsCUwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="Character_3_Mercenary" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAAFnSURBVFhH1ZUx
+        bsJAEEVzDI6QI2yZMmVKSo7gMqXLlD4CR6DkGJQpU1JSbrfIozxp/ZnBQRBrKZ7EjmfmP9lgXkopd/GW
+        UrmG9itu8Ra80BrtV9ziXyDgdZtdnkeAxvX7p6ENXFfSx4+xG9Yu9Ok+pR2BnLPBGViY88HoNhtj7gy6
+        r32BYX80eCQIKAQQrETzKtKOAMGIsIAgXURdYS6lwaAfsfYE+MAFBEAXEECdF8/qNEVfSMwzR70dgUiE
+        R8Mgt5ZbTp1ADQb6EKHengDQ8H08GYgQEIkw1297g/PzChCoXzIEFOZUgD1A3Q0f0cHFBYBGgllwEf77
+        98yZuWieuhtaEy2YhI/8lwAwQABfTq0jQl0fBbD3IiiCwcUFGODnBtT7r87gjICK6F5wizUsWExAF84F
+        R/28eIDrmjc5jEQLgXod7vU/TECpQz3oI3hOvD2BCB2MIIhgREBF3DCPOuQatwl05QxIUR2HSAiifAAA
+        AABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Character_4_Cleric" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAAFLSURBVFhH7ZQh
+        UgNBEEVzDI7AEVZGIpGROUIkEonMEThCJMdAIpGRkeOG+p16S9dndmsVzFIRr2qa/dP/VTZkU2sNtsNQ
+        pyCzJCs8P8d4aC0CMkuywvNzjMuGx8/g/rUEzCIvn8t6LuPF0I8Ay+4uV5jF7uEp8GLPlrINyOXslEg/
+        AqW8B9/LrrNwAb/DfDruAnYIJMncBCYFuMx7ZBYIHPb7IMtl2IWo6F+AAwEvFXmhQMTxMsGrYKYP+hPg
+        42SZ+DhfAgTyswxl5MX/Eji+nQOWOrkYkF6PwNxiBJhL0Q/Wz+f8PT9bj4BfaOEigHAWAF4nO9YlkH+U
+        BBkvQYCyDM/YuU6BqWLId4B/a2b64CawSAD49rfKM6279DjjgeCvCzy/HKog2BLwDCJkmaF1F/oT4MAX
+        jSXMgsss5aNuFYpcCPQ44+FvBOrmCwtAus+OimCjAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="Item_Sword_0_ManniKatt" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -291,7 +316,7 @@
         RA88uVQG94EQwlrMyeApWCgVGbNZg9ksh9wFHhDFu9U73SUAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Item_Sword_Exodus" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Item_Sword_Eckesachs" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAADlSURBVDhPnZEh

@@ -28,12 +28,13 @@ namespace ConcenReact
                 for(int x=0;x<xTiles;x++)
                 {
                     tiles[x, y] = Tile.GetRandomTile(assetHandler, debugForm,rSalt.Next()+assetHandler.Rand.Next());
+
                 }
             }
 
-
             return tiles;
         }
+
         public Bitmap GetMapBitmap()
         {
             Bitmap karte = new Bitmap(xTiles * tileSize, yTiles * tileSize);

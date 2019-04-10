@@ -17,7 +17,16 @@ namespace ConcenReact
 
             if (currPlayer == player1 && currPlayerMovePwr > 0 && !inBattle )
             { 
-                gameMap.Tiles[player1.XPos, player1.YPos].LeaveTile(player1);
+                GameMap.Tiles[player1.XPos, player1.YPos].LeaveTile(player1);
+
+                if(inInventory)
+                {
+                    if(keys == Keys.R || keys == Keys.NumPad1)
+                    {
+                        invenPopUp.KeyHandler(keys);
+                    }
+                }
+
                 if (keys == Keys.Right || keys == Keys.D)
                 {
                     if(inInventory)
@@ -26,7 +35,7 @@ namespace ConcenReact
                     }
                     else if (player1.XPos + 1 < pbSizeX / tileSize)
                     {
-                        if (gameMap.Tiles[player1.XPos + 1, player1.YPos].IsEnterable)
+                        if (GameMap.Tiles[player1.XPos + 1, player1.YPos].IsEnterable)
                         {
                             player1.XPos++;
                             currPlayerMovePwr--;
@@ -43,7 +52,7 @@ namespace ConcenReact
                     }
                     else if (player1.YPos - 1 >= 0)
                     {
-                        if (gameMap.Tiles[player1.XPos, player1.YPos - 1].IsEnterable)
+                        if (GameMap.Tiles[player1.XPos, player1.YPos - 1].IsEnterable)
                         {
                             player1.YPos--;
                             currPlayerMovePwr--;
@@ -60,7 +69,7 @@ namespace ConcenReact
                     }
                     else if (player1.YPos + 1 < pbSizeY / tileSize)
                     {
-                        if (gameMap.Tiles[player1.XPos, player1.YPos + 1].IsEnterable)
+                        if (GameMap.Tiles[player1.XPos, player1.YPos + 1].IsEnterable)
                         {
                             player1.YPos++;
                             currPlayerMovePwr--;
@@ -77,7 +86,7 @@ namespace ConcenReact
                     }
                     else if (player1.XPos - 1 >= 0)
                     {
-                        if (gameMap.Tiles[player1.XPos - 1, player1.YPos].IsEnterable)
+                        if (GameMap.Tiles[player1.XPos - 1, player1.YPos].IsEnterable)
                         {
                             player1.XPos--;
                             currPlayerMovePwr--;
@@ -86,7 +95,7 @@ namespace ConcenReact
 
                     }
                 }
-                gameMap.Tiles[player1.XPos, player1.YPos].EnterTile(player1);
+                GameMap.Tiles[player1.XPos, player1.YPos].EnterTile(player1);
             }
             /*
              * NUR TEMPORÄR UM SPIELER2 MANUELL ZU STEUERN
@@ -194,7 +203,7 @@ namespace ConcenReact
                 else if (!inAction())
                 {
                     //Temp. Tile-Verweis zu weiteren Bearbeitung
-                    Tile eventTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
+                    Tile eventTile = GameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
 
                     //Überprüfen, ob das Tile eine Interaktion besitzt
                     if (eventTile.GetInteraction() != null)

@@ -23,10 +23,19 @@ namespace ConcenReact
 
         //Prefabs/ Vorgefertigte Items
         List<Weapon> prefabWeapons;
+        List<Weapon> prefabUniqueWeapons;
 
+        //Brushes und Pens
+        List<Pen> rarityPens;
+        List<Brush> rarityBrushes;
 
-        public InitializeAssets()
+        //AssetHandler
+        AssetHandler assetHandler;
+
+        public InitializeAssets(AssetHandler assetHandler)
         {
+            this.assetHandler = assetHandler;
+
             WeaponIcons = new List<Bitmap>();
 
             TileIcons = new List<Bitmap>();
@@ -37,27 +46,68 @@ namespace ConcenReact
             characterBitmaps = new List<Bitmap>();
 
             PrefabWeapons = new List<Weapon>();
+            prefabUniqueWeapons = new List<Weapon>();
+
+            rarityPens = new List<Pen>();
+            rarityBrushes = new List<Brush>();
 
             Initialize();
         }
         private void Initialize()
         {
             AddWeaponIcons();
+            AddUniqueWeaponIcons();
             AddTiles();
             AddWeaponNames();
             AddUniqueWeaponNames();
             AddRarityPrefixes();
             AddCharacterBitmaps();
+            AddPrefabUniqueWeapons();
+
+            AddRarityPens();
+            AddRarityBrushes();
+        }
+        private void AddRarityBrushes()
+        {
+            /*
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Gray)));
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Green)));
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Blue)));
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Violet)));
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Yellow)));
+            rarityBrushes.Add(new SolidBrush(Color.FromArgb(128, Color.Orange)));
+            */
+            rarityBrushes.Add(Brushes.Gray);
+            rarityBrushes.Add(Brushes.Green);
+            rarityBrushes.Add(Brushes.LightBlue);
+            rarityBrushes.Add(Brushes.Violet);
+            rarityBrushes.Add(Brushes.Yellow);
+            rarityBrushes.Add(Brushes.Orange);
+        }
+        private void AddRarityPens()
+        {
+            rarityPens.Add(Pens.Gray);
+            rarityPens.Add(Pens.Green);
+            rarityPens.Add(Pens.LightBlue);
+            rarityPens.Add(Pens.Violet);
+            rarityPens.Add(Pens.Yellow);
+            rarityPens.Add(Pens.Orange);
         }
         private void AddCharacterBitmaps()
         {
             characterBitmaps.Add(Properties.Resources.Character_0_Myrmim);
             characterBitmaps.Add(Properties.Resources.Character_1_Lord);
             characterBitmaps.Add(Properties.Resources.Character_2_LordLyn);
+            characterBitmaps.Add(Properties.Resources.Character_3_Mercenary);
+            CharacterBitmaps.Add(Properties.Resources.Character_4_Cleric);
         }
         private void AddPrefabWeapons()
         {
-            PrefabWeapons.Add(new Weapon(null, WeaponIcons[(int)ItemWeapons.Eisenschwert], false, true, WeaponNames[(int)ItemWeapons.Eisenschwert],"", 0.02, 0.03, 0));
+            PrefabWeapons.Add(new Weapon(assetHandler, WeaponIcons[(int)ItemWeapons.Eisenschwert], false, true, WeaponNames[(int)ItemWeapons.Eisenschwert],"", 0.2, 0.3, 0));
+        }
+        private void AddPrefabUniqueWeapons()
+        {
+            PrefabUniqueWeapons.Add(new Weapon(assetHandler, UniqueWeaponIcons[(int)ItemUniqueWeapons.Eckesachs], false, true, UniqueWeaponNames[(int)ItemUniqueWeapons.Eckesachs], "", 8, 8, 5));
         }
         private void AddRarityPrefixes()
         {
@@ -100,8 +150,8 @@ namespace ConcenReact
         }
         private void AddUniqueWeaponNames()
         {
+            UniqueWeaponNames.Add("Eckesachs");
             UniqueWeaponNames.Add("Mani Katti");
-            UniqueWeaponNames.Add("Exodus");
         }
         private void AddWeaponIcons()
         {
@@ -115,8 +165,8 @@ namespace ConcenReact
         }
         private void AddUniqueWeaponIcons()
         {
+            UniqueWeaponIcons.Add(Properties.Resources.Item_Sword_Eckesachs);
             UniqueWeaponIcons.Add(Properties.Resources.Item_Sword_0_ManniKatt);
-            UniqueWeaponIcons.Add(Properties.Resources.Item_Sword_Exodus);
             UniqueWeaponIcons.Add(Properties.Resources.Item_Sword_Rune);
         }
         private void AddTiles()
@@ -141,5 +191,8 @@ namespace ConcenReact
         public List<Bitmap> UniqueWeaponIcons { get => uniqueWeaponIcons; set => uniqueWeaponIcons = value; }
         public List<Bitmap> CharacterBitmaps { get => characterBitmaps; set => characterBitmaps = value; }
         internal List<Weapon> PrefabWeapons { get => prefabWeapons; set => prefabWeapons = value; }
+        internal List<Weapon> PrefabUniqueWeapons { get => prefabUniqueWeapons; set => prefabUniqueWeapons = value; }
+        public List<Pen> RarityPens { get => rarityPens; set => rarityPens = value; }
+        public List<Brush> RarityBrushes { get => rarityBrushes; set => rarityBrushes = value; }
     }
 }

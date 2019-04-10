@@ -24,10 +24,14 @@ namespace ConcenReact
         {
             Title = "Name: " + Name;
         }
-        public void AppendName(char c)
+        public void AppendName(char c,bool shift)
         {
-            Name += c;
+            
 
+            if (!shift)
+                c = Char.ToLower(c);
+
+            Name += c;
             SetTitle();
         }
         public void ShortenName()

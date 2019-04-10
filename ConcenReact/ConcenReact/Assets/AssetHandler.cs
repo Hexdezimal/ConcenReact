@@ -18,7 +18,7 @@ namespace ConcenReact
         private Random rand;
         public AssetHandler()
         {
-            Assets = new InitializeAssets();
+            Assets = new InitializeAssets(this);
 
             weaponIconsCount = assets.WeaponIcons.Count;
             weaponNamesCount = assets.WeaponNames.Count;
@@ -45,8 +45,8 @@ namespace ConcenReact
     }
     public enum ItemUniqueWeapons
     {
+        Eckesachs,
         ManniKatti,
-        Exodus,
         RunenSchwert,
     }
 
@@ -106,5 +106,8 @@ namespace ConcenReact
         Myrmidone,
         Lord_Roy,
         Lord_Lyn,
+        Mercenary,
+        Cleric,
     }
+
 }

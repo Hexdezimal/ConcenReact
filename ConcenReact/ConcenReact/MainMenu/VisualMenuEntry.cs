@@ -37,10 +37,10 @@ namespace ConcenReact
             GesamtGraphic.Dispose();
             
         }
-        public virtual void KeyHandler(Keys key, VisualMenuEntry sender)
+        public virtual void KeyHandler(KeyEventArgs e, VisualMenuEntry sender)
         {
             if (DebugForm != null && sender!=null)
-                DebugForm.WriteLine(sender.ToString()+" : "+key.ToString());
+                DebugForm.WriteLine(sender.ToString()+" : "+e.KeyCode.ToString());
         }
         public virtual void DrawVisualMenuEntry()
         {

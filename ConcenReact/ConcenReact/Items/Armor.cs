@@ -29,6 +29,14 @@ namespace ConcenReact
             data += "Defense Mod.: " + defenseModifier  + "%\n";
             return data;
         }
+        public override int DrawDataString(Font textFont, Graphics g, int detailBoxWidth, int detailBoxHeight, int detailBoxX, int detailBoxY)
+        {
+            int entry = base.DrawDataString(textFont,g, detailBoxWidth, detailBoxHeight, detailBoxX,detailBoxY);
+            g.DrawString("Defense Mod.: " + defenseModifier + "%",textFont, Brushes.White, detailBoxX,detailBoxY+ entry *textFont.Height);
+            entry++;
+            return entry;
+
+        }
         //Standard-Konstruktor für Leeres Item
         public Armor():base()
         {

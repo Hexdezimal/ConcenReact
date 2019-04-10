@@ -46,7 +46,7 @@ namespace ConcenReact
         private Brush menuBrush;
         private Brush iconBackgroundBrush;
         private int menuTransparency;
-        private List<Pen> rarityPens;
+
 
         //Status-Abfragen für aktionen
         private bool inBattle;
@@ -83,9 +83,9 @@ namespace ConcenReact
             this.assetHandler = assetHandler;
 
             //Random Map
-            gameMap = new Karte(pbSizeX / tileSize, pbSizeY / tileSize, tileSize);
-            gameMap.Tiles = Karte.GenerateRandomTiles(assetHandler, pbSizeX / tileSize, pbSizeY / tileSize,null);
-            background = gameMap.GetMapBitmap();
+            GameMap = new Karte(pbSizeX / tileSize, pbSizeY / tileSize, tileSize);
+            GameMap.Tiles = Karte.GenerateRandomTiles(assetHandler, pbSizeX / tileSize, pbSizeY / tileSize,null);
+            background = GameMap.GetMapBitmap();
 
             //Gesamt-Bitmap
             gesamt = new Bitmap(background.Width, background.Height);
@@ -93,7 +93,7 @@ namespace ConcenReact
             MenuTransparency = 128;
             menuBrush = new SolidBrush(Color.FromArgb(MenuTransparency, Color.DarkBlue));
             iconBackgroundBrush = new SolidBrush(Color.FromArgb(MenuTransparency, Color.Black));
-            InitializeRarityPens();
+
             CheckPlayerOnTile();
 
 
@@ -102,16 +102,12 @@ namespace ConcenReact
             SetupStartingPlayer(player1);
 
         }
-        private void InitializeRarityPens()
+        public void DisposeBitmaps()
         {
-            rarityPens = new List<Pen>();
-            rarityPens.Add(Pens.Gray);
-            rarityPens.Add(Pens.Green);
-            rarityPens.Add(Pens.Blue);
-            rarityPens.Add(Pens.Violet);
-            rarityPens.Add(Pens.Yellow);
-            rarityPens.Add(Pens.Orange);
+            gesamt.Dispose();
+            background.Dispose();
         }
+
         //Zusammenfassung der Aktionen
         private bool inAction()
         {
@@ -141,14 +137,14 @@ namespace ConcenReact
         private void CheckPlayerOnTile()
         {
             //Setzen der besuchten tiles
-            gameMap.Tiles[player1.XPos, player1.YPos].EnterTile(player1);
-            gameMap.Tiles[player2.XPos, player2.YPos].EnterTile(player2);
+            GameMap.Tiles[player1.XPos, player1.YPos].EnterTile(player1);
+            GameMap.Tiles[player2.XPos, player2.YPos].EnterTile(player2);
         }
         public void ClickGame(Point clickPos)
         {
             //Tile-Information in Debug-Konsole
             if(debugForm!=null)
-                debugForm.WriteLine(gameMap.Tiles[clickPos.X / tileSize, clickPos.Y / tileSize].GetDebugTileString());
+                debugForm.WriteLine(GameMap.Tiles[clickPos.X / tileSize, clickPos.Y / tileSize].GetDebugTileString());
 
 
             lastClickedPos.X = clickPos.X / tileSize;
@@ -199,7 +195,7 @@ namespace ConcenReact
 
 
                 //Aktuelle Tile
-                Tile tempTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
+                Tile tempTile = GameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
 
                 //Indikator für Interaktion, überprüfen ob Interagierbar + Interaktion nicht leer
                 if(tempTile.IsInteractable && tempTile.GetInteraction()!=null)
@@ -230,7 +226,7 @@ namespace ConcenReact
             //Wenn mit etwas interagiert wird (Dorf-Dialog geöffnet etc)
             if(isInteracting)
             {
-                Tile tempTile = gameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
+                Tile tempTile = GameMap.Tiles[currPlayer.XPos, currPlayer.YPos];
 
                 //Erneute Überprüfung auf Vorhandensein des Events zur sicherheit
                 if(tempTile.GetInteraction()!=null)
@@ -240,7 +236,7 @@ namespace ConcenReact
                     {
 
                         //Temporäres Pop-Up zur Darstellung
-                        GetItemPopupMenu itemPopup = new GetItemPopupMenu((GetItemInteraction)tempTile.GetInteraction(), menuBrush,iconBackgroundBrush,rarityPens, pbSizeX, pbSizeY,gesamtGraphics,debugForm);
+                        GetItemPopupMenu itemPopup = new GetItemPopupMenu(assetHandler, (GetItemInteraction)tempTile.GetInteraction(), menuBrush,iconBackgroundBrush, pbSizeX, pbSizeY,gesamtGraphics,debugForm);
 
                         //Anzeige des Pop-Ups
                         itemPopup.DrawPopup();
@@ -258,7 +254,7 @@ namespace ConcenReact
                 //
                 //Anzeigen des Pop-Ups
                 if(currPlayer != invenPopUp.P)
-                    invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush, iconBackgroundBrush, rarityPens, pbSizeX, pbSizeY, gesamtGraphics, debugForm);
+                    invenPopUp = new InventoryPopupMenu(assetHandler, currPlayer, menuBrush, iconBackgroundBrush,  pbSizeX, pbSizeY, gesamtGraphics, debugForm);
                 invenPopUp.DrawPopup();
             }
 
@@ -268,7 +264,7 @@ namespace ConcenReact
         {
             currPlayer = player1;
             currPlayerMovePwr = player1.MovePower;
-            invenPopUp = new InventoryPopupMenu(currPlayer, menuBrush, iconBackgroundBrush, rarityPens, pbSizeX, pbSizeY, gesamtGraphics, debugForm);
+            invenPopUp = new InventoryPopupMenu(assetHandler, currPlayer, menuBrush, iconBackgroundBrush,  pbSizeX, pbSizeY, gesamtGraphics, debugForm);
         }
         private String GetSubMenuString(Tile tempTile)
         {
@@ -297,5 +293,6 @@ namespace ConcenReact
         internal Player Player1 { get => player1; set => player1 = value; }
         internal Player Player2 { get => player2; set => player2 = value; }
         public int MenuTransparency { get => menuTransparency; set => menuTransparency = value; }
+        internal Karte GameMap { get => gameMap; set => gameMap = value; }
     }
 }

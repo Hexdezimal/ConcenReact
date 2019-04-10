@@ -42,7 +42,7 @@
             // 
             // pbMainGame
             // 
-            this.pbMainGame.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pbMainGame.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pbMainGame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMainGame.Location = new System.Drawing.Point(86, 30);
             this.pbMainGame.Name = "pbMainGame";

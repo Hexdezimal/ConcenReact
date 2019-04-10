@@ -21,7 +21,7 @@ namespace ConcenReact
         private int detailBoxWidth, detailBoxHeight;
         private Item currentSelectedItem;
 
-        public InventoryPopupMenu(Player p,Brush mB, Brush iconBg,List<Pen> rarityPens, int wX, int wY, Graphics g, DebugForm df) : base(mB,iconBg,rarityPens, wX, wY,g,df)
+        public InventoryPopupMenu(AssetHandler assetHandler, Player p,Brush mB, Brush iconBg, int wX, int wY, Graphics g, DebugForm df) : base(assetHandler, mB,iconBg, wX, wY,g,df)
         {
             this.p = p;
             IconBackgroundBrush = iconBg;
@@ -43,7 +43,7 @@ namespace ConcenReact
         }
         private void DrawIconBorder(Item item)
         {
-            Context.DrawRectangle(RarityPens[item.Rarity], xPosItemBitmap, yPosItemBitmap , ItemBitmapSize, ItemBitmapSize);
+            Context.DrawRectangle(AssetHandler.Assets.RarityPens[item.Rarity], xPosItemBitmap, yPosItemBitmap , ItemBitmapSize, ItemBitmapSize);
         }
         private void DrawItemIcon(Item item)
         {
@@ -63,7 +63,7 @@ namespace ConcenReact
                 //TODO RÜSTUNGSPARAMETER ANZEIGEN
             }
 
-            Context.DrawString(item.Prefix+item.Name + ": ", TextFont, Brushes.White, xPosItemBitmap - PopupSizeX * 0.55f, yPosItemBitmap);
+            Context.DrawString(item.Prefix + item.Name + ": ", MethodLib.GetResizedFont(item.Prefix + item.Name + ": ", TextFont,(int)((double)PopupSizeX*0.55)), Brushes.White, xPosItemBitmap - PopupSizeX * 0.55f, yPosItemBitmap);
             DrawItemIcon(item);
         }
         public override void SetBitmapAndTileSize(Bitmap bmp)
@@ -115,10 +115,8 @@ namespace ConcenReact
             DrawItem(tempArmor);
             Context.DrawString("E", SystemFonts.DefaultFont, Brushes.Yellow, xPosItemBitmap + ItemBitmapSize * 0.65f, yPosItemBitmap + ItemBitmapSize - (ItemBitmapSize / 2));
 
-
             yPos++;
 
-            
             DrawHorizontalSeperatorLine(new Pen(IconBackgroundBrush, ItemBitmapSize / 16), yPosItemBitmap + ItemBitmapSize * 1.5f);
 
             yPos++;
@@ -154,13 +152,44 @@ namespace ConcenReact
 
         public override void KeyHandler(Keys key)
         {
-            if(key==Keys.Up || key == Keys.W)
+            //
+            //DEBUG
+            //
+            if (key == Keys.NumPad1)
+                p.Weapon = AssetHandler.Assets.PrefabUniqueWeapons[(int)ItemUniqueWeapons.Eckesachs];
+            if (key == Keys.R)
+            {
+                DebugForm.WriteLine("drin");
+                if (currentSelectedItemIndex < p.EquipmentCount)
+                {
+                    if(currentSelectedItemIndex==0)
+                    {
+                        p.Weapon = Weapon.GetRandomWeapon(AssetHandler);
+
+                    }
+
+                }
+                else if(currentSelectedItemIndex - p.EquipmentCount < p.Items.Count)
+                {
+                    //Abfrage auf Inventar-Slots
+                    if (currentSelectedItemIndex - p.EquipmentCount < p.Items.Count)
+                    {
+                        if (p.Items[currentSelectedItemIndex - p.EquipmentCount] != null)
+                        {
+                            p.Items[currentSelectedItemIndex - p.EquipmentCount] = Weapon.GetRandomWeapon(AssetHandler);
+
+                        }
+                    }
+                }
+                itemSelected = false;
+            }
+            if (key==Keys.Up || key == Keys.W)
             {
                 if(currentSelectedItemIndex-1>=0)
                 {
                     currentSelectedItemIndex--;
                     if (DebugForm != null)
-                        DebugForm.WriteLine("Up: " + currentSelectedItem);
+                        DebugForm.WriteLine("Up: " + currentSelectedItemIndex);
 
                     if (currentSelectedItemIndex != lastSelectedItemIndex)
                         itemSelected = false;
@@ -172,7 +201,7 @@ namespace ConcenReact
                 {
                     currentSelectedItemIndex++;
                     if (DebugForm != null)
-                        DebugForm.WriteLine("Down: " + currentSelectedItem);
+                        DebugForm.WriteLine("Down: " + currentSelectedItemIndex);
 
                     if (currentSelectedItemIndex != lastSelectedItemIndex)
                         itemSelected = false;
@@ -229,11 +258,13 @@ namespace ConcenReact
 
                 }
             }
+           
         }
         
         private void DrawCurrentItemName()
         {
-            Context.DrawString(currentSelectedItem.GetDataAsString()+"\n"+currentSelectedItem.Description, TextFont, Brushes.White, GetMenuRectangleF().Right, GetMenuRectangleF().Top + HeaderFont.Size / 2);
+            currentSelectedItem.DrawDataString(TextFont,Context, detailBoxWidth, detailBoxHeight,GetMenuRectangle().Right,GetMenuRectangle().Top);
+           // Context.DrawString(currentSelectedItem.GetDataAsString()+"\n"+currentSelectedItem.Description, TextFont, Brushes.White, GetMenuRectangleF().Right, GetMenuRectangleF().Top + HeaderFont.Size / 2);
         }
         private void ChangeItemSelectedState()
         {

@@ -12,7 +12,7 @@ namespace ConcenReact
     {
         private GetItemInteraction interaction; //Item-Interaktion für das Menü
         
-        public GetItemPopupMenu(GetItemInteraction gii, Brush mB,Brush iconBg, List<Pen> rarityPens, int wX, int wY,Graphics g,DebugForm df) : base(mB,iconBg,rarityPens, wX, wY, g,df)
+        public GetItemPopupMenu(AssetHandler assetHandler,GetItemInteraction gii, Brush mB,Brush iconBg, int wX, int wY,Graphics g,DebugForm df) : base(assetHandler, mB,iconBg,wX, wY, g,df)
         {
             interaction = gii;
 

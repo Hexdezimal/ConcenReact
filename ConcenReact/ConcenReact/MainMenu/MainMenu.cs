@@ -66,14 +66,25 @@ namespace ConcenReact
             {
                 if(vp.GetType()==typeof(VisualProfileEditorEntry))
                 {
-                    p = ((VisualProfileEditorEntry)vp).CreatedPlayer;
+                    p = ((VisualProfileEditorEntry)vp).ResetCreatedPlayer();
 
                 }
             }
 
-            
-
             return p;
+        }
+        public Size GetXYTiles()
+        {
+            Size s = new Size(35, 25);
+
+            foreach (MainMenuEntry vp in entries)
+            {
+                if (vp.GetType() == typeof(VisualProfileEditorEntry))
+                {
+                    s = new Size(((VisualProfileEditorEntry)vp).GetMapXTiles(), ((VisualProfileEditorEntry)vp).GetMapYTiles());
+                }
+            }
+            return s;
         }
         public void ResetPressed()
         {
@@ -180,13 +191,13 @@ namespace ConcenReact
 
             gesamtGraphics.Dispose();
         }
-        public void KeyHandler(Keys key)
+        public void KeyHandler(KeyEventArgs e)
         {
-            if(key == Keys.Down)
+            if(e.KeyCode == Keys.Down)
             {
                 if(InVisualProfileEditor1) //InVisualEntry
                 {
-                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key, ((VisualMenuEntry)entries[currentMenuEntry]));
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(e, ((VisualMenuEntry)entries[currentMenuEntry]));
                 }
                 else
                 {
@@ -195,11 +206,11 @@ namespace ConcenReact
 
                 }
             }
-            if(key==Keys.Up)
+            if(e.KeyCode == Keys.Up)
             {
                 if(InVisualEntry)
                 {
-                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(key, ((VisualMenuEntry)entries[currentMenuEntry]));
+                    ((VisualMenuEntry)entries[currentMenuEntry]).KeyHandler(e, ((VisualMenuEntry)entries[currentMenuEntry]));
                 }
                 else
                 {
@@ -208,7 +219,7 @@ namespace ConcenReact
                     
                 }
             }
-            if(key==Keys.Enter)
+            if(e.KeyCode == Keys.Enter)
             {
                 if(currentMenuEntry>-1)
                 {

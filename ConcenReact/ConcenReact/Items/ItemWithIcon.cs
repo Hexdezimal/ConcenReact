@@ -37,6 +37,18 @@ namespace ConcenReact
 
             return data;
         }
+        public override int DrawDataString(Font textFont, Graphics g, int detailBoxWidth, int detailBoxHeight,int detailBoxX, int detailBoxY)
+        {
+            int entry = 0; //detailBoxY (obere kante des fensters + entry (Anzahl der Zeile) * Die Höhe der Schriftart
+
+            g.DrawString(Prefix + Name, MethodLib.GetResizedFont(Prefix+Name,textFont,detailBoxWidth), Brushes.White, detailBoxX,detailBoxY+ entry*textFont.Height);
+
+            entry++;
+            g.DrawString("Rarity: " + ((ItemRarity)Rarity).ToString(), textFont, assetHandler.Assets.RarityBrushes[Rarity], detailBoxX, detailBoxY+entry * textFont.Height);
+            entry++;
+            
+            return entry;
+        }
 
         internal AssetHandler AssetHandler { get => assetHandler; set => assetHandler = value; }
     }

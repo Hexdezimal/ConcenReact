@@ -103,6 +103,26 @@ namespace ConcenReact.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Character_3_Mercenary {
+            get {
+                object obj = ResourceManager.GetObject("Character_3_Mercenary", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Character_4_Cleric {
+            get {
+                object obj = ResourceManager.GetObject("Character_4_Cleric", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Item_Sword_0_ManniKatt {
             get {
                 object obj = ResourceManager.GetObject("Item_Sword_0_ManniKatt", resourceCulture);
@@ -143,9 +163,9 @@ namespace ConcenReact.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Item_Sword_Exodus {
+        internal static System.Drawing.Bitmap Item_Sword_Eckesachs {
             get {
-                object obj = ResourceManager.GetObject("Item_Sword_Exodus", resourceCulture);
+                object obj = ResourceManager.GetObject("Item_Sword_Eckesachs", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

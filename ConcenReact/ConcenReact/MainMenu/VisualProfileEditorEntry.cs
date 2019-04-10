@@ -25,6 +25,8 @@ namespace ConcenReact
         private string tempName;
         private Bitmap tempBitmap;
 
+        //Maße für Width/Height
+        int mapXTiles, mapYTiles;
 
 
         public VisualProfileEditorEntry(AssetHandler assetHandler, DebugForm debugForm, int windowSizeX, int windowSizeY, Brush menuBrush, string name, string header) : base(assetHandler, debugForm, windowSizeX, windowSizeY, menuBrush, name, header)
@@ -49,7 +51,12 @@ namespace ConcenReact
 
             //Option-Entry
             SetupCharacterBitmapOption();
+
+            mapXTiles = 35;
+            mapYTiles = 20;
+
         }
+        //Brushes anlegen TODO: assetHandler
         private void CreateEntryBackgroundAndHighlightBrush(Brush menuBrush)
         {
 
@@ -63,8 +70,12 @@ namespace ConcenReact
         }
         private void SetupCharacterBitmapOption()
         {
+            //Default Width 35 / Default Height 25
+            
             entries.Add(new VisualMenuEntryCharacterBitmapOption(assetHandler, windowSize));
             entries.Add(new VisualMenuEntryEnterNameOption(assetHandler, windowSize));
+            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, 35, 70, 15,"X-Felder"));
+            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, 25, 40, 10,"Y-Felder"));
 
         }
         public override Bitmap GetGesamtBitmap()
@@ -102,20 +113,26 @@ namespace ConcenReact
             base.Close();
            // Pressed = false;
         }
-        public override void KeyHandler(Keys key, VisualMenuEntry sender)
+        private bool shift;
+        public override void KeyHandler(KeyEventArgs e, VisualMenuEntry sender)
         {
             //Übergabe an base-methode für Debug-Output
-            base.KeyHandler(key,sender);
+            base.KeyHandler(e,sender);
 
-            if(key>=Keys.A && key<=Keys.Z)
+
+
+            if(e.KeyCode>=Keys.A && e.KeyCode<=Keys.Z)
             {
-
+                if (e.Modifiers == Keys.Shift)
+                    shift = true;
+                else
+                    shift = false;
                 //Übergabe der Keys an AppendName der VisualMenuEntryEnterNameOptions
                 if(entries[currentMenuItemIndex]!=null)
                 {
                     if (entries[currentMenuItemIndex].GetType()==typeof(VisualMenuEntryEnterNameOption))
                     {
-                        ((VisualMenuEntryEnterNameOption)entries[currentMenuItemIndex]).AppendName((char)key);
+                        ((VisualMenuEntryEnterNameOption)entries[currentMenuItemIndex]).AppendName((char)e.KeyCode,shift);
                         tempName = ((VisualMenuEntryEnterNameOption)entries[currentMenuItemIndex]).Name;
                         CreatePlayer();
                     }
@@ -123,16 +140,16 @@ namespace ConcenReact
                 }
             }
 
-
+            shift = false;
             //Menübewegung
-            if(key==Keys.Down)
+            if(e.KeyCode==Keys.Down)
             {
                 if(currentMenuItemIndex+1<entries.Count)
                 {
                     currentMenuItemIndex++;
                 }
             }
-            else if(key==Keys.Up)
+            else if(e.KeyCode == Keys.Up)
             {
                 if (currentMenuItemIndex - 1 >=0)
                 {
@@ -141,7 +158,7 @@ namespace ConcenReact
             }
 
 
-            else if(key==Keys.Enter || key==Keys.Add)
+            else if(e.KeyCode==Keys.Enter || e.KeyCode==Keys.Add)
             {
 
                 if (entries[currentMenuItemIndex] != null)
@@ -157,10 +174,14 @@ namespace ConcenReact
                         tempBitmap = ((VisualMenuEntryCharacterBitmapOption)entries[currentMenuItemIndex]).CurrBitmap;
                         CreatePlayer();
                     }
+                    if (entries[currentMenuItemIndex].GetType() == typeof(VisualMenuEntryChangeIntValueOption))
+                    {
+                        ChangeIntValueOptionValues();
+                    }
                     //Character erstellen
                 }
             }
-            else if(key==Keys.Back || key==Keys.Subtract)
+            else if(e.KeyCode==Keys.Back || e.KeyCode==Keys.Subtract)
             {
                 if(entries[currentMenuItemIndex]!=null)
                 {
@@ -175,16 +196,23 @@ namespace ConcenReact
                         //Name kürzen und in Merker schreiben
                         ((VisualMenuEntryEnterNameOption)entries[currentMenuItemIndex]).ShortenName();
                         tempName = ((VisualMenuEntryEnterNameOption)entries[currentMenuItemIndex]).Name;
+                        
+                    }
+                    if (entries[currentMenuItemIndex].GetType() == typeof(VisualMenuEntryCharacterBitmapOption))
+                    {
+                        //gewählte Bitmap in Merker schreiben
+                        tempBitmap = ((VisualMenuEntryCharacterBitmapOption)entries[currentMenuItemIndex]).CurrBitmap;
                         CreatePlayer();
                     }
 
+                    ChangeIntValueOptionValues();
 
-                    //Character erstellen
+
 
                     GesamtGraphic.Dispose();
                 }
             }
-            else if(key==Keys.Escape)
+            else if(e.KeyCode==Keys.Escape)
             {
                 
                 if (entries[currentMenuItemIndex].GetType() == typeof(VisualMenuEntryCharacterBitmapOption))
@@ -193,9 +221,34 @@ namespace ConcenReact
                 }
             }
         }
+        public void ChangeIntValueOptionValues()
+        {
+            if (entries[currentMenuItemIndex].GetType() == typeof(VisualMenuEntryChangeIntValueOption))
+            {
+                if (((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).ValueTitle == "X-Felder")
+                    mapXTiles = ((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).Value;
+                else if ((((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).ValueTitle == "Y-Felder"))
+                    mapYTiles = ((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).Value;
+            }
+        }
+        public Player ResetCreatedPlayer()
+        {
+            CreatePlayer();
+            return createdPlayer;
+        }
         private void CreatePlayer()
         {
             createdPlayer = new Player(tempName, false, tempBitmap);
+        }
+        public int GetMapXTiles()
+        {
+            ChangeIntValueOptionValues();
+            return mapXTiles;
+        }
+        public int GetMapYTiles()
+        {
+            ChangeIntValueOptionValues();
+            return mapYTiles;
         }
         internal Player CreatedPlayer { get => createdPlayer; set => createdPlayer = value; }
     }

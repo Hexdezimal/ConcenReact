@@ -24,13 +24,17 @@ namespace ConcenReact
         private Player createdPlayer;
         private string tempName;
         private Bitmap tempBitmap;
+        private GameConfig config;
 
         //Maße für Width/Height
         int mapXTiles, mapYTiles;
 
 
-        public VisualProfileEditorEntry(AssetHandler assetHandler, DebugForm debugForm, int windowSizeX, int windowSizeY, Brush menuBrush, string name, string header) : base(assetHandler, debugForm, windowSizeX, windowSizeY, menuBrush, name, header)
+        public VisualProfileEditorEntry(GameConfig config,AssetHandler assetHandler, DebugForm debugForm, int windowSizeX, int windowSizeY, Brush menuBrush, string name, string header) : base(assetHandler, debugForm, windowSizeX, windowSizeY, menuBrush, name, header)
         {
+            //Spielekonfig Merken zur Bearbeitung
+            this.config = config;
+
             //Aktuell angewählter Menüeintrag
             createdPlayer = new Player("DUMMY", false);
             tempBitmap = createdPlayer.CharacterBitmap;
@@ -52,8 +56,8 @@ namespace ConcenReact
             //Option-Entry
             SetupCharacterBitmapOption();
 
-            mapXTiles = 35;
-            mapYTiles = 20;
+            mapXTiles = config.xTiles;
+            mapYTiles = config.yTiles;
 
         }
         //Brushes anlegen TODO: assetHandler
@@ -74,8 +78,8 @@ namespace ConcenReact
             
             entries.Add(new VisualMenuEntryCharacterBitmapOption(assetHandler, windowSize));
             entries.Add(new VisualMenuEntryEnterNameOption(assetHandler, windowSize));
-            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, 35, 70, 15,"X-Felder"));
-            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, 25, 40, 10,"Y-Felder"));
+            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, config.xTiles, 70, 15,"X-Felder"));
+            entries.Add(new VisualMenuEntryChangeIntValueOption(assetHandler, windowSize, config.yTiles, 40, 10,"Y-Felder"));
 
         }
         public override Bitmap GetGesamtBitmap()
@@ -176,9 +180,8 @@ namespace ConcenReact
                     }
                     if (entries[currentMenuItemIndex].GetType() == typeof(VisualMenuEntryChangeIntValueOption))
                     {
-                        ChangeIntValueOptionValues();
+                        ChangeAndSaveConfig();
                     }
-                    //Character erstellen
                 }
             }
             else if(e.KeyCode==Keys.Back || e.KeyCode==Keys.Subtract)
@@ -204,8 +207,13 @@ namespace ConcenReact
                         tempBitmap = ((VisualMenuEntryCharacterBitmapOption)entries[currentMenuItemIndex]).CurrBitmap;
                         CreatePlayer();
                     }
+                    if(entries[currentMenuItemIndex].GetType()==typeof(VisualMenuEntryChangeIntValueOption))
+                    {
+                        ChangeAndSaveConfig();
+                    }
 
-                    ChangeIntValueOptionValues();
+  
+
 
 
 
@@ -220,6 +228,22 @@ namespace ConcenReact
                     
                 }
             }
+        }
+        private void ChangeAndSaveConfig()
+        {
+            //Ändern des eigentlichen Werts
+            ChangeIntValueOptionValues();
+            //Abfrage auf X oder Y entry
+            if (((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).Title == "X-Felder: " + mapXTiles)
+            {
+                config.xTiles = mapXTiles;
+            }
+            else if (((VisualMenuEntryChangeIntValueOption)entries[currentMenuItemIndex]).Title == "Y-Felder: " + mapYTiles)
+            {
+                config.yTiles = mapYTiles;
+            }
+            //Config mit neuen Werten Speichern
+            config.SaveConfig();
         }
         public void ChangeIntValueOptionValues()
         {

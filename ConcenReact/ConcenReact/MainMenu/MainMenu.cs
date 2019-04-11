@@ -15,6 +15,9 @@ namespace ConcenReact
         Graphics gesamtGraphics;
         Brush menuBrush;
         Brush highlightBrush;
+
+        private GameConfig config;
+
         private int currentMenuEntry;
         private int menuEntries;
 
@@ -27,8 +30,10 @@ namespace ConcenReact
 
         private List<MainMenuEntry> entries;
 
-        public MainMenu(AssetHandler assetHandler, DebugForm debugForm, int pbWidth, int pbHeight)
+        public MainMenu(GameConfig gameConfig,AssetHandler assetHandler, DebugForm debugForm, int pbWidth, int pbHeight)
         {
+            Config = gameConfig;
+
 
             background = new Bitmap(pbWidth, pbHeight);
             gesamt = new Bitmap(background);
@@ -38,8 +43,8 @@ namespace ConcenReact
             currentMenuEntry = 0;
 
             //Höhe der einträge + Padding
-            entryHeight = pbHeight / 8;
-            entryWidth = pbWidth / 4;
+            entryHeight = pbHeight / 12;
+            entryWidth = (pbWidth / 4 );
             padding = entryHeight / 4;
 
             //Aktion
@@ -163,15 +168,15 @@ namespace ConcenReact
         {
             if(currentMenuEntry>-1)
             {
-                gesamtGraphics.FillRectangle(highlightBrush, new Rectangle(background.Width / 4,(background.Height/2)+(currentMenuEntry*entryHeight)+entryHeight, entryWidth,entryHeight));
+                gesamtGraphics.FillRectangle(highlightBrush, new Rectangle((background.Width / 4) + (entryWidth / 2), (background.Height/2)+(currentMenuEntry*entryHeight)+entryHeight, entryWidth,entryHeight));
             }
         }
         private void DrawEntries()
         {
             for(int i=0;i<Entries.Count;i++)
             {
-                gesamtGraphics.FillRectangle(MenuBrush, new Rectangle(background.Width / 4, (background.Height / 2) + (i* entryHeight)+entryHeight, entryWidth, entryHeight));
-                gesamtGraphics.DrawString(Entries[i].Name, new Font("Arial", 35, FontStyle.Bold), Brushes.White, new PointF(background.Width / 4, (background.Height / 2) + (i * entryHeight)+entryHeight));
+                gesamtGraphics.FillRectangle(MenuBrush, new Rectangle((background.Width / 4)+(entryWidth/2), (background.Height / 2) + (i* entryHeight)+entryHeight, entryWidth, entryHeight));
+                gesamtGraphics.DrawString(Entries[i].Name, new Font("Arial", 33, FontStyle.Bold), Brushes.White, new PointF((background.Width / 4) + (entryWidth / 2), (background.Height / 2) + (i * entryHeight)+entryHeight));
             }
         }
         private void DrawMainMenu()
@@ -187,7 +192,7 @@ namespace ConcenReact
             gesamtGraphics = Graphics.FromImage(background);
 
             gesamtGraphics.FillRectangle(Brushes.DarkGray, new Rectangle(0, 0, background.Width, background.Height));
-            gesamtGraphics.DrawString("ConcenReact", new Font("Arial",25,FontStyle.Bold), Brushes.White, (background.Width / 2 ) - "ConcenReact".Length, background.Height / 4);
+            gesamtGraphics.DrawString("ConcenReact", new Font("Arial",25,FontStyle.Bold), Brushes.White, (background.Width / 2)- 19*"Length".Length, background.Height / 4);
 
             gesamtGraphics.Dispose();
         }
@@ -243,5 +248,6 @@ namespace ConcenReact
         public bool InVisualEntry { get => inVisualEntry; set => inVisualEntry = value; }
         public bool InVisualProfileEditor1 { get => InVisualProfileEditor; set => InVisualProfileEditor = value; }
         public Brush MenuBrush { get => menuBrush; set => menuBrush = value; }
+        public GameConfig Config { get => config; set => config = value; }
     }
 }

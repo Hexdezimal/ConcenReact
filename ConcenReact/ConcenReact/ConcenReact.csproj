@@ -66,6 +66,7 @@
     <Compile Include="Assets\AssetHandler.cs" />
     <Compile Include="Assets\MethodLib.cs" />
     <Compile Include="Control.cs" />
+    <Compile Include="Game\GameConfig.cs" />
     <Compile Include="Game\Game_ControlHandling.cs" />
     <Compile Include="Assets\InitializeAssets.cs" />
     <Compile Include="Items\ItemWithIcon.cs" />

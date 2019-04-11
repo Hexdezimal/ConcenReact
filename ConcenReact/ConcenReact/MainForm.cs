@@ -24,9 +24,12 @@ namespace ConcenReact
         private int gamePbWidth, gamePbHeight, border, tileSize;
         private int xTiles, yTiles;
 
+        //Konfiguration / Technik
         private Game mainGame;
         private DebugForm debugForm;
         private AssetHandler assetHandler;
+        private GameConfig config;
+
 
         private MainMenu mainMenu;
         private MainMenuEntry lastClickedEntry;
@@ -40,6 +43,9 @@ namespace ConcenReact
         {
             //Initialize Assets
             assetHandler = new AssetHandler();
+
+            //GameConfig Laden
+            InitConfig();
 
             //Initialize Block
             InitializeComponent();
@@ -56,6 +62,21 @@ namespace ConcenReact
 
             timerGameTick.Start();
 
+        }
+        private void InitConfig()
+        {
+            config = new GameConfig();
+            try
+            {
+                config = GameConfig.LoadConfig();
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("Error beim Laden der Config!\nVerwende Standard-Einstellungen..");
+                config.CreateConfig();
+            }
+            //config = ;
         }
         private void DebugMode()
         {
@@ -185,7 +206,8 @@ namespace ConcenReact
         {
             InitializeFormMainMenu();
             InitializeDebugMainMenu();
-            mainMenu.AddEntry(new VisualProfileEditorEntry(assetHandler, debugForm, Size.Width, Size.Height, mainMenu.MenuBrush, "Profil", "Profil"));
+            
+            mainMenu.AddEntry(new VisualProfileEditorEntry(config, assetHandler, debugForm, Size.Width-border*3, Size.Height-border*5, mainMenu.MenuBrush, "Profil", "Profil"));
             mainMenuInitialized = true;
 
         }
@@ -209,55 +231,45 @@ namespace ConcenReact
         }
         private void InitializeDebugMainMenu()
         {
-            mainMenu = new MainMenu(assetHandler, debugForm,gamePbWidth, gamePbHeight);
+            mainMenu = new MainMenu(config, assetHandler, debugForm,gamePbWidth, gamePbHeight);
         }
         //Initialisieren der Form für das Hauptmenü
         private void InitializeFormMainMenu()
         {
-            border = 15;
-            tileSize = 32;
+            border = config.border;
+            tileSize = config.tilesize;
 
             gamePbWidth = 800;
             gamePbHeight = 600;
 
-            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
-            pbMainGame.Location = new Point(border, border);
+            this.Size = new Size(gamePbWidth + config.border * 3, gamePbHeight + config.border * 5);
+            pbMainGame.Location = new Point(config.border, config.border);
         }
         private void InitializeForm()
         {
-            //Festlegen der default Fenstergrößen - Anpassung für komplettes Game
+            //Form initialisieren mit Daten aus Config
 
-            border = 15;
-            tileSize = 32;
+            border = config.border;
+            tileSize = config.tilesize;
 
-            xTiles = 35;
-            yTiles = 20;
+            xTiles = config.borderXAmount;
+            yTiles = config.borderYAmount;
 
-            gamePbWidth = xTiles*tileSize;
-            gamePbHeight = yTiles*tileSize;
-            this.Size = new Size(gamePbWidth+border*3, gamePbHeight+border*5);
+            gamePbWidth = xTiles*config.tilesize;
+            gamePbHeight = yTiles*config.tilesize;
+            this.Size = new Size(gamePbWidth+config.border*3, gamePbHeight+config.border*5);
 
             pbMainGame.Location = new Point(border,border);
             
         }
-        private void InitializeForm(int xTiles, int yTiles)
-        {
-            border = 15;
-            tileSize = 32;
 
-            gamePbWidth = xTiles * tileSize;
-            gamePbHeight = yTiles * tileSize;
-            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
-
-            pbMainGame.Location = new Point(border, border);
-        }
         private void RefreshFormLayout()
         {
-            border = 15;
-            tileSize = 32;
+            border = config.border;
+            tileSize = config.tilesize;
 
-            this.Size = new Size(gamePbWidth + border * 3, gamePbHeight + border * 5);
-            pbMainGame.Location = new Point(border, border);
+            this.Size = new Size(gamePbWidth + config.border * 3, gamePbHeight + config.border * 5);
+            pbMainGame.Location = new Point(config.border, config.border);
         }
     }
 }
